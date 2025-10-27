@@ -253,7 +253,11 @@ const Dashboard = () => {
         </SidebarContent>
 
         <SidebarFooter className="p-4 space-y-3">
-          <div className="flex items-center space-x-3 p-2">
+          <div
+            onClick={() => setActiveTab('settings')}
+            title="Open Settings"
+            className="flex items-center space-x-3 p-2 cursor-pointer hover:bg-gray-100 rounded-md"
+          >
             <img
               src={profile?.avatar_url}
               alt="Profile"
