@@ -16,7 +16,7 @@ import {
   useSidebar,
 } from '@/components/ui/sidebar';
 import { supabase } from '@/integrations/supabase/client';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { toast } from 'sonner';
 import UserProfileSummary from '@/components/dashboard/UserProfileSummary';
 import SwapRequestManager from '@/components/dashboard/SwapRequestManager';
