@@ -160,6 +160,17 @@ const Chat = () => {
                 </h1>
               </div>
             </div>
+
+            <div className="flex items-center space-x-3">
+              <button
+                onClick={() => navigate('/community')}
+                className="flex items-center px-3 py-2 bg-white border border-gray-200 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors"
+                title="Go to Community"
+              >
+                <Users className="w-4 h-4 mr-2" />
+                <span className="hidden sm:inline">Community</span>
+              </button>
+            </div>
           </div>
         </div>
       </motion.header>
