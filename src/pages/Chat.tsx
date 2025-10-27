@@ -4,7 +4,6 @@ import { ArrowLeft, Send, Bot, User, Users, Search, Phone, Video, MoreVertical }
 import { useNavigate, useLocation } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
-import AIHelper from '@/components/chat/AIHelper';
 
 const Chat = () => {
   const navigate = useNavigate();
