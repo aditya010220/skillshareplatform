@@ -17,30 +17,33 @@ const Chat = () => {
   const chats = [
     {
       id: 1,
-      name: 'Sarah Johnson',
-      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=sarah',
-      lastMessage: 'Great session on React hooks!',
+      name: 'Priya Sharma',
+      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=priya-sharma',
+      lastMessage: 'Loved our React session — thanks!',
       timestamp: '2 min ago',
       isOnline: true,
-      unreadCount: 2
+      unreadCount: 2,
+      city: 'Mumbai'
     },
     {
       id: 2,
-      name: 'Michael Chen',
-      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=michael',
-      lastMessage: 'Thanks for the marketing tips',
+      name: 'Rohan Patel',
+      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=rohan-patel',
+      lastMessage: 'Shared some SEO tips in the doc',
       timestamp: '1 hour ago',
       isOnline: false,
-      unreadCount: 0
+      unreadCount: 0,
+      city: 'Bengaluru'
     },
     {
       id: 3,
-      name: 'Emily Rodriguez',
-      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=emily',
-      lastMessage: 'Spanish lesson was amazing!',
+      name: 'Anjali Reddy',
+      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=anjali-reddy',
+      lastMessage: 'Sure — happy to take the Spanish session tomorrow',
       timestamp: '3 hours ago',
       isOnline: true,
-      unreadCount: 1
+      unreadCount: 1,
+      city: 'Hyderabad'
     },
   ];
 
