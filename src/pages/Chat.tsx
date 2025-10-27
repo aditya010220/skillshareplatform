@@ -11,7 +11,6 @@ const Chat = () => {
   const [messages, setMessages] = useState<any[]>([]);
   const [newMessage, setNewMessage] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
-  const [showAIHelper, setShowAIHelper] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   // Mock chat data - in real app, this would come from database
