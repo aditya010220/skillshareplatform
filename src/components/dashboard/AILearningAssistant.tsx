@@ -81,24 +81,29 @@ const AILearningAssistant = () => {
     }
 
     // Try different models in order of preference
-    const models = ['gemini-pro'];
+    const models = ['gemini-2.5-flash'];
     
     for (const model of models) {
       try {
         console.log(`Trying model: ${model}`);
         const response = await fetch(
-          `https://generativelanguage.googleapis.com/v1/models/${model}:generateContent?key=${apiKey}`,
+          `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`,
           {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
+              'x-goog-api-key': apiKey,
             },
             body: JSON.stringify({
-              contents: [{
-                parts: [{
-                  text: `You are an AI Learning Assistant for a skill-sharing platform. Help with this learning-related question: ${question}. Provide helpful, educational responses focused on skill development, learning strategies, and career growth.`
-                }]
-              }],
+              contents: [
+                {
+                  parts: [
+                    {
+                      text: `You are an AI Learning Assistant for a skill-sharing platform. Help with this learning-related question: ${question}. Provide helpful, educational responses focused on skill development, learning strategies, and career growth.`
+                    }
+                  ]
+                }
+              ],
               generationConfig: {
                 temperature: 0.7,
                 maxOutputTokens: 1000,
