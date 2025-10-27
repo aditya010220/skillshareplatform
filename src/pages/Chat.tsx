@@ -56,6 +56,26 @@ const Chat = () => {
     }
   ];
 
+  const location = useLocation();
+
+  // If navigated here with a selectedMember, pre-select a chat with them
+  React.useEffect(() => {
+    const sel = (location.state as any)?.selectedMember;
+    if (sel) {
+      const chatObj = {
+        id: sel.id ?? `user-${Date.now()}`,
+        name: sel.full_name || sel.name,
+        avatar: sel.avatar_url || sel.avatar || `https://api.dicebear.com/7.x/avataaars/svg?seed=${sel.full_name || sel.name}`,
+        lastMessage: '',
+        timestamp: 'Just now',
+        isOnline: false,
+        unreadCount: 0
+      };
+      setSelectedChat(chatObj);
+      setMessages([]);
+    }
+  }, [location.state]);
+
   const mockMessages = [
     {
       id: 1,
