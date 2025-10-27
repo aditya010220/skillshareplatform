@@ -43,7 +43,26 @@ const Dashboard = () => {
   const [profile, setProfile] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('overview');
+  const [calendarSelectedMember, setCalendarSelectedMember] = useState<any>(null);
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // If navigated here with state to open calendar, handle it
+  React.useEffect(() => {
+    try {
+      const state = (location && (location as any).state) || {};
+      if (state.openCalendar) {
+        setActiveTab('calendar');
+        if (state.selectedMember) setCalendarSelectedMember(state.selectedMember);
+        // clear history state so repeated navigation doesn't reopen
+        if (typeof window !== 'undefined' && window.history && window.history.replaceState) {
+          window.history.replaceState({}, document.title);
+        }
+      }
+    } catch (e) {
+      console.error('Failed to handle navigation state for calendar', e);
+    }
+  }, [location]);
 
   // Load cached session/profile to avoid blocking UI on navigation back
   React.useEffect(() => {
@@ -372,7 +391,7 @@ const Dashboard = () => {
               {activeTab === 'quizzes' && <QuizSystem />}
               {activeTab === 'requests' && <SwapRequestManager />}
               {activeTab === 'matchmaking' && <SmartMatchmaking />}
-              {activeTab === 'calendar' && <SessionCalendar />}
+              {activeTab === 'calendar' && <SessionCalendar selectedPartner={calendarSelectedMember} />}
               {activeTab === 'progress' && <ProgressTracking profile={profile} />}
               {activeTab === 'achievements' && <Gamification profile={profile} />}
               {activeTab === 'search' && <SearchFilters />}
