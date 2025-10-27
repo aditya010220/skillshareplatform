@@ -312,6 +312,13 @@ const Dashboard = () => {
               <div className="flex items-center space-x-4">
                 <NotificationCenter />
                 <button
+                  onClick={() => setActiveTab('calendar')}
+                  className="p-2 text-gray-500 hover:text-blue-500 transition-colors"
+                  title="Open Calendar"
+                >
+                  <Calendar className="w-5 h-5" />
+                </button>
+                <button
                   onClick={() => navigate('/chat')}
                   className="p-2 text-gray-500 hover:text-blue-500 transition-colors"
                   title="Open Chat"
