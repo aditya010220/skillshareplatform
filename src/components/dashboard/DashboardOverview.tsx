@@ -73,7 +73,7 @@ ${profile?.full_name || 'SkillSwap User'}`);
       title: 'XP Points',
       value: profile?.level_points || 250,
       change: '+45 this week',
-      color: 'from-purple-500 to-purple-600',
+      color: 'from-indigo-500 to-indigo-600',
       icon: Award,
       trend: 'up'
     }
@@ -280,12 +280,12 @@ ${profile?.full_name || 'SkillSwap User'}`);
                   activity.type === 'session' ? 'bg-blue-100' :
                   activity.type === 'match' ? 'bg-green-100' :
                   activity.type === 'achievement' ? 'bg-yellow-100' :
-                  'bg-purple-100'
+                  'bg-indigo-100'
                 }`}>
                   {activity.type === 'session' && <Calendar className="w-4 h-4 text-blue-600" />}
                   {activity.type === 'match' && <Users className="w-4 h-4 text-green-600" />}
                   {activity.type === 'achievement' && <Award className="w-4 h-4 text-yellow-600" />}
-                  {activity.type === 'rating' && <Star className="w-4 h-4 text-purple-600" />}
+                  {activity.type === 'rating' && <Star className="w-4 h-4 text-indigo-600" />}
                 </div>
                 <div className="flex-1">
                   <p className="text-sm font-medium text-gray-900">{activity.action}</p>
@@ -330,7 +330,7 @@ ${profile?.full_name || 'SkillSwap User'}`);
           
           <motion.button
             onClick={handleAddSkills}
-            className="p-4 bg-gradient-to-r from-purple-500 to-purple-600 text-white rounded-xl hover:from-purple-600 hover:to-purple-700 transition-all"
+            className="p-4 bg-gradient-to-r from-indigo-500 to-indigo-600 text-white rounded-xl hover:from-indigo-600 hover:to-indigo-700 transition-all"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
