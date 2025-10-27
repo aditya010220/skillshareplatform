@@ -145,9 +145,8 @@ const Community = () => {
               >
                 <ArrowLeft className="w-6 h-6" />
               </button>
-              <div className="flex items-center space-x-2">
-                <Users className="w-8 h-8 text-blue-600" />
-                <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+              <div>
+                <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
                   Community
                 </h1>
               </div>
@@ -340,7 +339,7 @@ const Community = () => {
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                 >
-                  <Calendar className="w-4 h-4" />
+                  Schedule
                 </motion.button>
               </div>
             </motion.div>
