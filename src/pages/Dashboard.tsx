@@ -193,7 +193,6 @@ const Dashboard = () => {
     { id: 'quizzes', label: 'Quizzes', icon: HelpCircle },
     { id: 'requests', label: 'Requests', icon: Bell },
     { id: 'matchmaking', label: 'Find Matches', icon: Users },
-    { id: 'calendar', label: 'Calendar', icon: Calendar },
     { id: 'progress', label: 'Progress', icon: BarChart3 },
     { id: 'achievements', label: 'Achievements', icon: Award },
     { id: 'search', label: 'Search', icon: Search },
