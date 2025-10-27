@@ -85,21 +85,21 @@ const Chat = () => {
     {
       id: 2,
       senderId: 'current-user',
-      content: 'You\'re welcome! I\'m glad you found it helpful',
+      content: 'You\'re welcome! Glad it helped — shall we meet on Zoom?',
       timestamp: new Date(Date.now() - 240000),
       isOwn: true
     },
     {
       id: 3,
       senderId: 1,
-      content: 'Could we schedule another session on advanced hooks?',
+      content: 'Yes — next Wednesday at 4 PM IST works for me',
       timestamp: new Date(Date.now() - 120000),
       isOwn: false
     },
     {
       id: 4,
       senderId: 'current-user',
-      content: 'Absolutely! How about next Tuesday at 3 PM?',
+      content: 'Perfect — I\'ll send the invite.',
       timestamp: new Date(Date.now() - 60000),
       isOwn: true
     }
