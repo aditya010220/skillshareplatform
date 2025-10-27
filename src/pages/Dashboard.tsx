@@ -45,6 +45,26 @@ const Dashboard = () => {
   const [activeTab, setActiveTab] = useState('overview');
   const navigate = useNavigate();
 
+  // Load cached session/profile to avoid blocking UI on navigation back
+  React.useEffect(() => {
+    if (typeof window === 'undefined') return;
+    try {
+      const cachedUser = sessionStorage.getItem('ss_user');
+      const cachedProfile = sessionStorage.getItem('ss_profile');
+      if (cachedUser) {
+        setUser(JSON.parse(cachedUser));
+      }
+      if (cachedProfile) {
+        setProfile(JSON.parse(cachedProfile));
+      }
+      if (cachedUser || cachedProfile) {
+        setLoading(false);
+      }
+    } catch (e) {
+      console.error('Error reading cached session/profile', e);
+    }
+  }, []);
+
   useEffect(() => {
     let mounted = true;
 
@@ -57,6 +77,7 @@ const Dashboard = () => {
         
         if (session?.user) {
           console.log('User is authenticated:', session.user.id);
+          try { sessionStorage.setItem('ss_user', JSON.stringify(session.user)); } catch (e) { console.error('Could not cache user', e); }
           setUser(session.user);
           await fetchUserProfile(session.user);
         } else {
@@ -84,11 +105,13 @@ const Dashboard = () => {
         
         if (session?.user) {
           console.log('User authenticated via state change');
+          try { sessionStorage.setItem('ss_user', JSON.stringify(session.user)); } catch (e) { console.error('Could not cache user', e); }
           setUser(session.user);
           await fetchUserProfile(session.user);
           setLoading(false);
         } else {
           console.log('User signed out, redirecting to home');
+          try { sessionStorage.removeItem('ss_user'); sessionStorage.removeItem('ss_profile'); } catch (e) { /* ignore */ }
           setUser(null);
           setProfile(null);
           navigate('/');
@@ -130,7 +153,9 @@ const Dashboard = () => {
         setProfile(dummyProfile);
       } else {
         console.log('Profile loaded successfully');
-        setProfile(profileData || dummyProfile);
+        const finalProfile = profileData || dummyProfile;
+        setProfile(finalProfile);
+        try { sessionStorage.setItem('ss_profile', JSON.stringify(finalProfile)); } catch (e) { console.error('Could not cache profile', e); }
       }
     } catch (error) {
       console.error('Error fetching profile:', error);
@@ -148,6 +173,7 @@ const Dashboard = () => {
       }
 
       // Clear local UI state and redirect to home
+      try { sessionStorage.removeItem('ss_user'); sessionStorage.removeItem('ss_profile'); } catch (e) { /* ignore */ }
       setUser(null);
       setProfile(null);
       toast.success('Signed out successfully');
