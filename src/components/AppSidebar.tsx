@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Zap, Home, Users, MessageSquare, Settings, LogIn, UserPlus } from 'lucide-react';
+import { Zap, Home, Users, LogIn, UserPlus } from 'lucide-react';
 import {
   Sidebar,
   SidebarContent,
@@ -42,11 +42,6 @@ const AppSidebar = () => {
       title: 'Features',
       icon: Home,
       onClick: () => scrollToSection('features')
-    },
-    {
-      title: 'How It Works',
-      icon: Settings,
-      onClick: () => scrollToSection('how-it-works')
     },
     {
       title: 'Success Stories',

@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Users, MessageCircle, Calendar, Star, Award, Search, Filter, Video, Send, X, Clock } from 'lucide-react';
@@ -19,9 +18,9 @@ const MentorshipProgram = () => {
   const mentors = [
     {
       id: 1,
-      name: 'Dr. Sarah Chen',
+      name: 'Dr. Priya Sharma',
       title: 'Senior Software Engineer at Google',
-      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=sarah-mentor',
+      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=priya-mentor',
       rating: 4.9,
       sessions: 156,
       expertise: ['React', 'System Design', 'Career Growth'],
@@ -32,9 +31,9 @@ const MentorshipProgram = () => {
     },
     {
       id: 2,
-      name: 'Marcus Johnson',
+      name: 'Rohan Gupta',
       title: 'UX Design Director',
-      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=marcus-mentor',
+      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=rohan-mentor',
       rating: 4.8,
       sessions: 89,
       expertise: ['UI/UX Design', 'Design Systems', 'Product Strategy'],
@@ -45,9 +44,9 @@ const MentorshipProgram = () => {
     },
     {
       id: 3,
-      name: 'Elena Rodriguez',
+      name: 'Anjali Reddy',
       title: 'Data Science Manager',
-      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=elena-mentor',
+      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=anjali-mentor',
       rating: 4.9,
       sessions: 203,
       expertise: ['Python', 'Machine Learning', 'Data Analysis'],
@@ -61,8 +60,8 @@ const MentorshipProgram = () => {
   const myMentors = [
     {
       id: 1,
-      name: 'Dr. Sarah Chen',
-      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=sarah-mentor',
+      name: 'Dr. Priya Sharma',
+      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=priya-mentor',
       expertise: ['React', 'System Design'],
       nextSession: '2025-01-05 14:00',
       totalSessions: 8,
@@ -73,8 +72,8 @@ const MentorshipProgram = () => {
   const mentees = [
     {
       id: 1,
-      name: 'Alex Turner',
-      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=alex-mentee',
+      name: 'Arjun Singh',
+      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=arjun-mentee',
       level: 'Beginner',
       interests: ['React', 'JavaScript'],
       joinedDate: '2024-12-15',
@@ -82,8 +81,8 @@ const MentorshipProgram = () => {
     },
     {
       id: 2,
-      name: 'Jessica Park',
-      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=jessica-mentee',
+      name: 'Kavya Desai',
+      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=kavya-mentee',
       level: 'Intermediate',
       interests: ['Node.js', 'MongoDB'],
       joinedDate: '2024-12-10',
@@ -146,6 +145,13 @@ const MentorshipProgram = () => {
 
     setShowMessageModal(false);
     setMessageText('');
+  };
+
+  const handleApplyMentor = () => {
+    toast({
+      title: "Application Submitted!",
+      description: "Your mentor application has been received. We'll review it and get back to you soon.",
+    });
   };
 
   const timeSlots = [
@@ -248,7 +254,7 @@ const MentorshipProgram = () => {
                       </div>
                     </div>
                     <div className="text-right">
-                      <div className="text-lg font-bold text-purple-600">${mentor.hourlyRate}/hr</div>
+                      <div className="text-lg font-bold text-purple-600">₹{mentor.hourlyRate * 83}/hr</div>
                       <div className="text-xs text-gray-500">{mentor.responseTime}</div>
                     </div>
                   </div>
@@ -466,7 +472,7 @@ const MentorshipProgram = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
               <div className="text-center p-4 bg-purple-50 rounded-lg">
-                <div className="text-2xl font-bold text-purple-600 mb-2">$50-100/hr</div>
+                <div className="text-2xl font-bold text-purple-600 mb-2">₹4,150-8,300/hr</div>
                 <div className="text-sm text-gray-600">Average Earnings</div>
               </div>
               <div className="text-center p-4 bg-blue-50 rounded-lg">
@@ -519,7 +525,10 @@ const MentorshipProgram = () => {
                 />
               </div>
 
-              <button className="w-full bg-purple-600 text-white py-3 rounded-lg hover:bg-purple-700 transition-colors font-medium">
+              <button
+                onClick={handleApplyMentor}
+                className="w-full bg-purple-600 text-white py-3 rounded-lg hover:bg-purple-700 transition-colors font-medium"
+              >
                 Apply to Become a Mentor
               </button>
             </div>
@@ -550,7 +559,7 @@ const MentorshipProgram = () => {
                 />
                 <div>
                   <h4 className="font-medium text-gray-900">{selectedMentor?.name}</h4>
-                  <p className="text-sm text-gray-600">${selectedMentor?.hourlyRate}/hr</p>
+                  <p className="text-sm text-gray-600">₹{selectedMentor?.hourlyRate ? selectedMentor.hourlyRate * 83 : 0}/hr</p>
                 </div>
               </div>
 

@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { TrendingUp, Users, Calendar, Star, Award, BookOpen, MessageSquare, Target, Video, Plus } from 'lucide-react';
@@ -84,7 +83,7 @@ ${profile?.full_name || 'SkillSwap User'}`);
     {
       id: 1,
       title: 'React Fundamentals',
-      partner: 'Sarah Johnson',
+      partner: 'Priya Sharma',
       time: '2:00 PM Today',
       skill: 'React',
       type: 'teaching'
@@ -92,7 +91,7 @@ ${profile?.full_name || 'SkillSwap User'}`);
     {
       id: 2,
       title: 'Spanish Conversation',
-      partner: 'Emily Rodriguez',
+      partner: 'Anjali Reddy',
       time: '4:30 PM Tomorrow',
       skill: 'Spanish',
       type: 'learning'
@@ -100,7 +99,7 @@ ${profile?.full_name || 'SkillSwap User'}`);
     {
       id: 3,
       title: 'Photography Basics',
-      partner: 'Mike Chen',
+      partner: 'Rohan Patel',
       time: '10:00 AM Friday',
       skill: 'Photography',
       type: 'learning'
@@ -111,14 +110,14 @@ ${profile?.full_name || 'SkillSwap User'}`);
     {
       id: 1,
       action: 'Completed session',
-      details: 'Python Basics with David Kim',
+      details: 'Python Basics with Arjun Singh',
       time: '2 hours ago',
       type: 'session'
     },
     {
       id: 2,
       action: 'New match found',
-      details: 'Alex Thompson wants to learn React',
+      details: 'Kavya Desai wants to learn React',
       time: '5 hours ago',
       type: 'match'
     },
@@ -132,7 +131,7 @@ ${profile?.full_name || 'SkillSwap User'}`);
     {
       id: 4,
       action: 'Received rating',
-      details: '5 stars from Maria Garcia',
+      details: '5 stars from Nisha Iyer',
       time: '2 days ago',
       type: 'rating'
     }
@@ -166,7 +165,7 @@ ${profile?.full_name || 'SkillSwap User'}`);
         <div className="flex items-center justify-between">
           <div>
             <h2 className="text-3xl font-bold mb-2">
-              Welcome back, {profile?.full_name?.split(' ')[0] || 'John'}! 👋
+              Welcome back, {profile?.full_name?.split(' ')[0] || 'Aarav'}! 👋
             </h2>
             <p className="text-blue-100 text-lg">
               You're on Level {Math.floor((profile?.level_points || 0) / 100) + 1}. 

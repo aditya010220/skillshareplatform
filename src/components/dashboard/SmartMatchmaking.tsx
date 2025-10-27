@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Heart, X, Filter, MapPin, Clock, Star, RefreshCw } from 'lucide-react';
@@ -15,9 +14,9 @@ const SmartMatchmaking = () => {
   const matches = [
     {
       id: 1,
-      full_name: 'Sarah Johnson',
+      full_name: 'Priya Sharma',
       bio: 'Passionate web developer with 5 years of experience. Love teaching React and learning new design patterns.',
-      avatar_url: 'https://api.dicebear.com/7.x/avataaars/svg?seed=sarah',
+      avatar_url: 'https://api.dicebear.com/7.x/avataaars/svg?seed=priya',
       rating: 4.8,
       total_sessions: 24,
       location: 'San Francisco, CA',
@@ -27,9 +26,9 @@ const SmartMatchmaking = () => {
     },
     {
       id: 2,
-      full_name: 'Mike Chen',
+      full_name: 'Rohan Patel',
       bio: 'Digital marketing expert and guitar enthusiast. Always excited to share marketing strategies and learn new instruments.',
-      avatar_url: 'https://api.dicebear.com/7.x/avataaars/svg?seed=mike',
+      avatar_url: 'https://api.dicebear.com/7.x/avataaars/svg?seed=rohan',
       rating: 4.9,
       total_sessions: 31,
       location: 'New York, NY',
@@ -39,9 +38,9 @@ const SmartMatchmaking = () => {
     },
     {
       id: 3,
-      full_name: 'Emily Rodriguez',
+      full_name: 'Anjali Reddy',
       bio: 'Professional photographer and Spanish teacher. Love capturing moments and helping others learn languages.',
-      avatar_url: 'https://api.dicebear.com/7.x/avataaars/svg?seed=emily',
+      avatar_url: 'https://api.dicebear.com/7.x/avataaars/svg?seed=anjali',
       rating: 4.7,
       total_sessions: 18,
       location: 'Austin, TX',
@@ -51,9 +50,9 @@ const SmartMatchmaking = () => {
     },
     {
       id: 4,
-      full_name: 'David Kim',
+      full_name: 'Arjun Singh',
       bio: 'Full-stack developer and fitness coach. Passionate about clean code and helping people stay healthy.',
-      avatar_url: 'https://api.dicebear.com/7.x/avataaars/svg?seed=david',
+      avatar_url: 'https://api.dicebear.com/7.x/avataaars/svg?seed=arjun',
       rating: 4.6,
       total_sessions: 27,
       location: 'Seattle, WA',
@@ -63,9 +62,9 @@ const SmartMatchmaking = () => {
     },
     {
       id: 5,
-      full_name: 'Jessica Wang',
+      full_name: 'Kavya Desai',
       bio: 'UX designer with a passion for creating intuitive user experiences. Also love teaching Mandarin Chinese.',
-      avatar_url: 'https://api.dicebear.com/7.x/avataaars/svg?seed=jessica',
+      avatar_url: 'https://api.dicebear.com/7.x/avataaars/svg?seed=kavya',
       rating: 4.9,
       total_sessions: 35,
       location: 'Los Angeles, CA',
@@ -75,9 +74,9 @@ const SmartMatchmaking = () => {
     },
     {
       id: 6,
-      full_name: 'Carlos Mendoza',
+      full_name: 'Vikram Singh',
       bio: 'Backend engineer and salsa dance instructor. Love building scalable systems and teaching Latin dance.',
-      avatar_url: 'https://api.dicebear.com/7.x/avataaars/svg?seed=carlos',
+      avatar_url: 'https://api.dicebear.com/7.x/avataaars/svg?seed=vikram',
       rating: 4.8,
       total_sessions: 22,
       location: 'Miami, FL',
@@ -99,9 +98,9 @@ const SmartMatchmaking = () => {
     },
     {
       id: 8,
-      full_name: 'Marcus Thompson',
+      full_name: 'Arjun Kumar',
       bio: 'Cybersecurity expert and chess enthusiast. Dedicated to making the digital world safer and strategic thinking.',
-      avatar_url: 'https://api.dicebear.com/7.x/avataaars/svg?seed=marcus',
+      avatar_url: 'https://api.dicebear.com/7.x/avataaars/svg?seed=arjun-kumar',
       rating: 4.9,
       total_sessions: 28,
       location: 'Boston, MA',
@@ -111,9 +110,9 @@ const SmartMatchmaking = () => {
     },
     {
       id: 9,
-      full_name: 'Lisa Chang',
+      full_name: 'Nisha Iyer',
       bio: 'Product manager and French language tutor. Love building great products and sharing the beauty of French culture.',
-      avatar_url: 'https://api.dicebear.com/7.x/avataaars/svg?seed=lisa',
+      avatar_url: 'https://api.dicebear.com/7.x/avataaars/svg?seed=nisha',
       rating: 4.8,
       total_sessions: 33,
       location: 'Portland, OR',
@@ -123,9 +122,9 @@ const SmartMatchmaking = () => {
     },
     {
       id: 10,
-      full_name: 'Ahmed Hassan',
+      full_name: 'Rajesh Kumar',
       bio: 'Mobile app developer and Arabic teacher. Enjoy creating innovative mobile solutions and preserving language heritage.',
-      avatar_url: 'https://api.dicebear.com/7.x/avataaars/svg?seed=ahmed',
+      avatar_url: 'https://api.dicebear.com/7.x/avataaars/svg?seed=rajesh',
       rating: 4.6,
       total_sessions: 21,
       location: 'Houston, TX',

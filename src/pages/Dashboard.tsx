@@ -115,7 +115,7 @@ const Dashboard = () => {
       
       const dummyProfile = {
         id: user.id,
-        full_name: user.user_metadata?.full_name || 'John Doe',
+        full_name: user.user_metadata?.full_name || 'Aarav Kumar',
         avatar_url: user.user_metadata?.avatar_url || `https://api.dicebear.com/7.x/avataaars/svg?seed=${user.email}`,
         bio: 'Passionate learner and teacher. Love sharing knowledge and discovering new skills!',
         level_points: 250,
@@ -143,113 +143,7 @@ const Dashboard = () => {
     toast.success('Signed out successfully');
   };
 
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 flex items-center justify-center">
-        <motion.div 
-          className="text-center"
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.5 }}
-        >
-          {/* Skill Swap Animation */}
-          <div className="relative mb-8">
-            {/* Central swap icon */}
-            <motion.div
-              className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10"
-              animate={{ rotate: 360 }}
-              transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-            >
-              <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center shadow-lg">
-                <ArrowRightLeft className="w-8 h-8 text-white" />
-              </div>
-            </motion.div>
 
-            {/* Orbiting skill icons */}
-            <div className="relative w-48 h-48 mx-auto">
-              {[
-                { icon: Code, delay: 0, color: 'from-blue-400 to-blue-600' },
-                { icon: Palette, delay: 0.5, color: 'from-purple-400 to-purple-600' },
-                { icon: Calculator, delay: 1, color: 'from-green-400 to-green-600' },
-                { icon: BookOpen, delay: 1.5, color: 'from-orange-400 to-orange-600' },
-              ].map(({ icon: Icon, delay, color }, index) => (
-                <motion.div
-                  key={index}
-                  className="absolute w-12 h-12"
-                  style={{
-                    left: '50%',
-                    top: '50%',
-                    transformOrigin: '0 96px', // Orbit radius
-                  }}
-                  animate={{ rotate: 360 }}
-                  transition={{
-                    duration: 4,
-                    repeat: Infinity,
-                    ease: "linear",
-                    delay: delay
-                  }}
-                >
-                  <motion.div
-                    className={`w-12 h-12 bg-gradient-to-r ${color} rounded-lg flex items-center justify-center shadow-md transform -translate-x-1/2 -translate-y-1/2`}
-                    animate={{ 
-                      scale: [1, 1.1, 1],
-                      boxShadow: [
-                        '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
-                        '0 10px 15px -3px rgba(0, 0, 0, 0.2)',
-                        '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
-                      ]
-                    }}
-                    transition={{
-                      duration: 2,
-                      repeat: Infinity,
-                      delay: delay
-                    }}
-                  >
-                    <Icon className="w-6 h-6 text-white" />
-                  </motion.div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-
-          {/* Loading text with typing effect */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-          >
-            <h2 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-2">
-              SkillSwap
-            </h2>
-            <motion.p 
-              className="text-gray-600 text-lg"
-              animate={{ opacity: [0.5, 1, 0.5] }}
-              transition={{ duration: 1.5, repeat: Infinity }}
-            >
-              Loading your dashboard...
-            </motion.p>
-            <div className="flex justify-center mt-4 space-x-1">
-              {[0, 1, 2].map((index) => (
-                <motion.div
-                  key={index}
-                  className="w-2 h-2 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full"
-                  animate={{ 
-                    scale: [1, 1.5, 1],
-                    opacity: [0.4, 1, 0.4]
-                  }}
-                  transition={{
-                    duration: 1,
-                    repeat: Infinity,
-                    delay: index * 0.2
-                  }}
-                />
-              ))}
-            </div>
-          </motion.div>
-        </motion.div>
-      </div>
-    );
-  }
 
   if (!user) {
     return (

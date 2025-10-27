@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, Filter, MapPin, Clock, Star, User } from 'lucide-react';
@@ -30,9 +29,9 @@ const SearchFilters = () => {
   const results = [
     {
       id: 1,
-      full_name: 'Sarah Johnson',
+      full_name: 'Priya Sharma',
       bio: 'Passionate web developer with 5 years of experience. Love teaching React and learning new design patterns.',
-      avatar_url: 'https://api.dicebear.com/7.x/avataaars/svg?seed=sarah',
+      avatar_url: 'https://api.dicebear.com/7.x/avataaars/svg?seed=priya',
       rating: 4.8,
       total_sessions: 24,
       location: 'San Francisco, CA',
@@ -41,9 +40,9 @@ const SearchFilters = () => {
     },
     {
       id: 2,
-      full_name: 'Mike Chen',
+      full_name: 'Rohan Patel',
       bio: 'Digital marketing expert and guitar enthusiast. Always excited to share marketing strategies.',
-      avatar_url: 'https://api.dicebear.com/7.x/avataaars/svg?seed=mike',
+      avatar_url: 'https://api.dicebear.com/7.x/avataaars/svg?seed=rohan',
       rating: 4.9,
       total_sessions: 31,
       location: 'New York, NY',
@@ -52,9 +51,9 @@ const SearchFilters = () => {
     },
     {
       id: 3,
-      full_name: 'Emily Rodriguez',
+      full_name: 'Anjali Reddy',
       bio: 'Professional photographer and Spanish teacher. Love capturing moments and helping others learn languages.',
-      avatar_url: 'https://api.dicebear.com/7.x/avataaars/svg?seed=emily',
+      avatar_url: 'https://api.dicebear.com/7.x/avataaars/svg?seed=anjali',
       rating: 4.7,
       total_sessions: 18,
       location: 'Austin, TX',
@@ -63,9 +62,9 @@ const SearchFilters = () => {
     },
     {
       id: 4,
-      full_name: 'David Kim',
+      full_name: 'Arjun Singh',
       bio: 'Full-stack developer and fitness coach. Passionate about clean code and helping people stay healthy.',
-      avatar_url: 'https://api.dicebear.com/7.x/avataaars/svg?seed=david',
+      avatar_url: 'https://api.dicebear.com/7.x/avataaars/svg?seed=arjun',
       rating: 4.6,
       total_sessions: 27,
       location: 'Seattle, WA',

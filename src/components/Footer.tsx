@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Heart, Mail, MapPin, Phone, Zap, Instagram, MessageCircle, Twitter, Github } from 'lucide-react';
@@ -91,12 +90,12 @@ const Footer = () => {
   };
 
   return (
-    <footer className="bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 text-white relative overflow-hidden">
+    <footer className="bg-gradient-to-br from-gray-900 via-blue-900 to-indigo-900 text-white relative overflow-hidden">
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute top-0 left-0 w-40 h-40 bg-blue-500 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 right-0 w-60 h-60 bg-purple-500 rounded-full blur-3xl" />
-        <div className="absolute top-1/2 left-1/3 w-32 h-32 bg-pink-500 rounded-full blur-2xl" />
+        <div className="absolute bottom-0 right-0 w-60 h-60 bg-indigo-500 rounded-full blur-3xl" />
+        <div className="absolute top-1/2 left-1/3 w-32 h-32 bg-blue-500 rounded-full blur-2xl" />
       </div>
 
       <div className="relative z-10">
@@ -129,7 +128,7 @@ const Footer = () => {
                 >
                   <Zap className="w-8 h-8 text-blue-400" />
                 </motion.div>
-                <h3 className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+                <h3 className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent">
                   SkillSwap
                 </h3>
               </motion.div>
@@ -193,7 +192,7 @@ const Footer = () => {
                   <li key={category}>
                     <a
                       href="#"
-                      className="text-gray-300 hover:text-purple-400 transition-colors duration-200"
+                      className="text-gray-300 hover:text-indigo-400 transition-colors duration-200"
                     >
                       {category}
                     </a>
@@ -264,7 +263,7 @@ const Footer = () => {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex flex-col md:flex-row justify-between items-center">
               <div className="text-gray-400 text-sm mb-4 md:mb-0">
-                © {currentYear} SkillSwap. Made with <Heart className="w-4 h-4 inline text-red-400" /> for learners everywhere.
+                © {currentYear} SkillSwap.for learners everywhere.
               </div>
               <div className="flex space-x-6 text-sm text-gray-400">
                 <a href="#" className="hover:text-white transition-colors duration-200">

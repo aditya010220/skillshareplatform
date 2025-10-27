@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { MessageCircle, Send, Bot, User, Lightbulb, BookOpen, Target, Zap } from 'lucide-react';
 
@@ -14,6 +14,23 @@ const AILearningAssistant = () => {
   ]);
   const [inputMessage, setInputMessage] = useState('');
   const [isTyping, setIsTyping] = useState(false);
+  const [apiStatus, setApiStatus] = useState<'connected' | 'error' | 'loading'>('loading');
+  const [retryCount, setRetryCount] = useState(0);
+
+  // Test API connection on component mount
+  useEffect(() => {
+    const testConnection = async () => {
+      try {
+        await fetchGeminiResponse('Hello, test connection');
+        setApiStatus('connected');
+      } catch (error) {
+        console.error('API connection test failed:', error);
+        setApiStatus('error');
+      }
+    };
+
+    testConnection();
+  }, []);
 
   const quickActions = [
     {
@@ -53,6 +70,101 @@ const AILearningAssistant = () => {
     'quick-help': "I'm here to help! What specific topic or problem are you working on? I can assist with:\n\n• Code debugging and explanations\n• Concept clarification\n• Best practices and tips\n• Resource recommendations\n• Career guidance\n\nJust describe what you're stuck on, and I'll provide step-by-step guidance!"
   };
 
+  // Google AI (Gemini) API call with fallback models
+  const fetchGeminiResponse = async (question: string): Promise<string> => {
+    const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
+    
+    if (!apiKey) {
+      console.error('Gemini API key not found. Please add VITE_GEMINI_API_KEY to your .env file');
+      setApiStatus('error');
+      return 'API key not configured. Please check your environment variables.';
+    }
+
+    // Try different models in order of preference
+    const models = ['gemini-pro'];
+    
+    for (const model of models) {
+      try {
+        console.log(`Trying model: ${model}`);
+        const response = await fetch(
+          `https://generativelanguage.googleapis.com/v1/models/${model}:generateContent?key=${apiKey}`,
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              contents: [{
+                parts: [{
+                  text: `You are an AI Learning Assistant for a skill-sharing platform. Help with this learning-related question: ${question}. Provide helpful, educational responses focused on skill development, learning strategies, and career growth.`
+                }]
+              }],
+              generationConfig: {
+                temperature: 0.7,
+                maxOutputTokens: 1000,
+                topP: 0.8,
+                topK: 40
+              }
+            })
+          });
+        
+        if (!response.ok) {
+          console.warn(`Model ${model} failed with status: ${response.status}`);
+          if (model === models[models.length - 1]) {
+            // Last model failed
+            setApiStatus('error');
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          continue; // Try next model
+        }
+        
+        const data = await response.json();
+        
+        if (data.error) {
+          console.warn(`Model ${model} returned error:`, data.error);
+          if (model === models[models.length - 1]) {
+            setApiStatus('error');
+            return `Sorry, I encountered an error: ${data.error.message || 'Unknown error'}. Please try again.`;
+          }
+          continue; // Try next model
+        }
+        
+        if (!data.candidates || !data.candidates[0] || !data.candidates[0].content) {
+          console.warn(`Model ${model} returned unexpected response structure:`, data);
+          if (model === models[models.length - 1]) {
+            setApiStatus('error');
+            return 'Sorry, I received an unexpected response format. Please try rephrasing your question.';
+          }
+          continue; // Try next model
+        }
+        
+        console.log(`Successfully used model: ${model}`);
+        setApiStatus('connected');
+        return data.candidates[0].content.parts[0].text || 'Sorry, I could not generate a response.';
+        
+      } catch (error) {
+        console.warn(`Model ${model} failed:`, error);
+        if (model === models[models.length - 1]) {
+          // Last model failed
+          console.error('All models failed:', error);
+          setApiStatus('error');
+          
+          // Provide more specific error messages
+          if (error instanceof TypeError && error.message.includes('fetch')) {
+            return 'Sorry, there was a network error. Please check your internet connection and try again.';
+          }
+          
+          return `Sorry, there was an error: ${error instanceof Error ? error.message : 'Unknown error'}. Please try again.`;
+        }
+        // Continue to next model
+      }
+    }
+    
+    // This should never be reached, but just in case
+    setApiStatus('error');
+    return 'Sorry, all AI models are currently unavailable. Please try again later.';
+  };
+
   const handleSendMessage = async () => {
     if (!inputMessage.trim()) return;
 
@@ -67,20 +179,32 @@ const AILearningAssistant = () => {
     setInputMessage('');
     setIsTyping(true);
 
-    // Simulate AI response
-    setTimeout(() => {
+    try {
+      // Call Gemini API for real AI response
+      const aiAnswer = await fetchGeminiResponse(inputMessage);
       const botResponse = {
         id: messages.length + 2,
         type: 'bot',
-        content: "I understand you're asking about that. Let me help you with a detailed explanation and some practical examples. Based on your learning history, I recommend focusing on these key areas...",
+        content: aiAnswer,
         timestamp: new Date()
       };
       setMessages(prev => [...prev, botResponse]);
-      setIsTyping(false);
-    }, 2000);
+      setRetryCount(0); // Reset retry count on success
+    } catch (error) {
+      console.error('Message sending error:', error);
+      const errorResponse = {
+        id: messages.length + 2,
+        type: 'bot',
+        content: 'Sorry, I encountered an error. Please try again or check your internet connection.',
+        timestamp: new Date()
+      };
+      setMessages(prev => [...prev, errorResponse]);
+    }
+    
+    setIsTyping(false);
   };
 
-  const handleQuickAction = (action: string) => {
+  const handleQuickAction = async (action: string) => {
     const actionMessage = {
       id: messages.length + 1,
       type: 'user',
@@ -91,7 +215,20 @@ const AILearningAssistant = () => {
     setMessages(prev => [...prev, actionMessage]);
     setIsTyping(true);
 
-    setTimeout(() => {
+    try {
+      // Try to get AI response first
+      const aiResponse = await fetchGeminiResponse(`Help me with ${action.replace('-', ' ')}`);
+      
+      const botResponse = {
+        id: messages.length + 2,
+        type: 'bot',
+        content: aiResponse,
+        timestamp: new Date()
+      };
+      setMessages(prev => [...prev, botResponse]);
+    } catch (error) {
+      // Fallback to sample responses if API fails
+      console.error('Quick action API error:', error);
       const botResponse = {
         id: messages.length + 2,
         type: 'bot',
@@ -99,8 +236,9 @@ const AILearningAssistant = () => {
         timestamp: new Date()
       };
       setMessages(prev => [...prev, botResponse]);
-      setIsTyping(false);
-    }, 1500);
+    }
+    
+    setIsTyping(false);
   };
 
   return (
@@ -120,9 +258,43 @@ const AILearningAssistant = () => {
             <p className="text-sm text-gray-600">Your 24/7 learning companion</p>
           </div>
         </div>
-        <div className="flex items-center space-x-1 bg-green-100 px-2 py-1 rounded-full">
-          <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-          <span className="text-xs text-green-600 font-medium">Online</span>
+        <div className="flex items-center space-x-2">
+          <div className={`flex items-center space-x-1 px-2 py-1 rounded-full ${
+            apiStatus === 'connected' ? 'bg-green-100' : 
+            apiStatus === 'error' ? 'bg-red-100' : 'bg-yellow-100'
+          }`}>
+            <div className={`w-2 h-2 rounded-full ${
+              apiStatus === 'connected' ? 'bg-green-500' : 
+              apiStatus === 'error' ? 'bg-red-500' : 'bg-yellow-500'
+            }`}></div>
+            <span className={`text-xs font-medium ${
+              apiStatus === 'connected' ? 'text-green-600' : 
+              apiStatus === 'error' ? 'text-red-600' : 'text-yellow-600'
+            }`}>
+              {apiStatus === 'connected' ? 'AI Connected' : 
+               apiStatus === 'error' ? 'AI Error' : 'Connecting...'}
+            </span>
+          </div>
+          {apiStatus === 'error' && (
+            <button
+              onClick={() => {
+                setApiStatus('loading');
+                const testConnection = async () => {
+                  try {
+                    await fetchGeminiResponse('Hello, test connection');
+                    setApiStatus('connected');
+                  } catch (error) {
+                    console.error('API connection test failed:', error);
+                    setApiStatus('error');
+                  }
+                };
+                testConnection();
+              }}
+              className="text-xs text-blue-600 hover:text-blue-800 underline"
+            >
+              Retry
+            </button>
+          )}
         </div>
       </div>
 

@@ -106,7 +106,7 @@ const HeroSection = () => {
                   ease: "linear"
                 }}
                 style={{
-                  background: "linear-gradient(90deg, #2563EB, #7C3AED, #EC4899, #2563EB)",
+                  background: "linear-gradient(90deg,  #2563EB,#1E3A8A, #4338CA, #6366F1)",
                   backgroundSize: "300% 100%",
                   WebkitBackgroundClip: "text",
                   WebkitTextFillColor: "transparent",
@@ -136,7 +136,7 @@ const HeroSection = () => {
               >
                 <Button 
                   size="lg" 
-                  className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-4 text-lg rounded-full shadow-lg group"
+                  className="bg-blue-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-4 text-lg rounded-full shadow-lg group"
                 >
                   Start Learning Today
                   <motion.div
@@ -203,7 +203,7 @@ const HeroSection = () => {
                 transition={{ duration: 0.6, ease: "easeOut" }}
               >
                 <img
-                  src="/placeholder.svg"
+                  src="/her.jpg"
                   alt="People learning and teaching skills together"
                   className="w-full h-[500px] object-cover"
                 />

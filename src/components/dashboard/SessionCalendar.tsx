@@ -1,154 +1,105 @@
-
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Calendar, Clock, Video, Users, ChevronLeft, ChevronRight, CheckCircle, AlertCircle } from 'lucide-react';
+import { Calendar, Clock, Video, Users, ChevronLeft, ChevronRight, CheckCircle, AlertCircle, X } from 'lucide-react';
 
 const SessionCalendar = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [viewMode, setViewMode] = useState<'upcoming' | 'past' | 'all'>('upcoming');
+  const [showScheduleModal, setShowScheduleModal] = useState(false);
+  const [showCalendarView, setShowCalendarView] = useState(false);
+  const [newSessionDate, setNewSessionDate] = useState('');
+  const [newSessionTime, setNewSessionTime] = useState('');
 
-  // Enhanced dummy sessions data with more entries
+  // Reduced dummy sessions data
   const sessions = [
     // Future sessions
     {
       id: 1,
       title: 'React Fundamentals',
-      scheduled_at: '2024-01-25T14:00:00Z',
+      scheduled_at: '2025-01-25T14:00:00Z',
       duration: 60,
       status: 'scheduled',
       meeting_link: 'https://meet.google.com/abc-def-ghi',
-      partner: 'Sarah Johnson',
+      partner: 'Priya Sharma',
       offered_skill: 'React',
       requested_skill: 'UI/UX Design',
-      partner_avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=sarah'
+      partner_avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=priya'
     },
     {
       id: 2,
       title: 'Spanish Conversation',
-      scheduled_at: '2024-01-26T16:30:00Z',
+      scheduled_at: '2025-01-28T16:30:00Z',
       duration: 45,
       status: 'scheduled',
       meeting_link: 'https://zoom.us/j/123456789',
-      partner: 'Emily Rodriguez',
+      partner: 'Anjali Reddy',
       offered_skill: 'Spanish',
       requested_skill: 'Photography',
-      partner_avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=emily'
+      partner_avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=anjali'
     },
     {
       id: 3,
-      title: 'Marketing Strategy',
-      scheduled_at: '2024-01-28T13:00:00Z',
-      duration: 75,
-      status: 'scheduled',
-      meeting_link: 'https://teams.microsoft.com/meeting',
-      partner: 'Mike Chen',
-      offered_skill: 'Digital Marketing',
-      requested_skill: 'Guitar',
-      partner_avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=mike'
-    },
-    {
-      id: 4,
-      title: 'Python & Django Workshop',
-      scheduled_at: '2024-01-30T10:00:00Z',
+      title: 'Python Workshop',
+      scheduled_at: '2025-02-05T10:00:00Z',
       duration: 120,
       status: 'scheduled',
       meeting_link: 'https://meet.google.com/xyz-abc-def',
-      partner: 'David Kim',
+      partner: 'Arjun Singh',
       offered_skill: 'Python',
-      requested_skill: 'Fitness Training',
-      partner_avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=david'
-    },
-    {
-      id: 5,
-      title: 'UX Design Review',
-      scheduled_at: '2024-02-01T15:00:00Z',
-      duration: 90,
-      status: 'scheduled',
-      meeting_link: 'https://zoom.us/j/987654321',
-      partner: 'Jessica Wang',
-      offered_skill: 'UI/UX Design',
-      requested_skill: 'Mandarin Chinese',
-      partner_avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=jessica'
+      requested_skill: 'UI Design',
+      partner_avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=arjun'
     },
     // Past sessions
     {
-      id: 6,
+      id: 4,
       title: 'Photography Basics',
-      scheduled_at: '2024-01-18T10:00:00Z',
+      scheduled_at: '2025-01-18T10:00:00Z',
       duration: 90,
       status: 'completed',
-      partner: 'Emily Rodriguez',
+      partner: 'Anjali Reddy',
       offered_skill: 'Photography',
       requested_skill: 'Digital Marketing',
-      partner_avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=emily',
+      partner_avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=anjali',
       rating: 5,
       feedback: 'Excellent session! Learned so much about composition and lighting.'
     },
     {
-      id: 7,
-      title: 'Web Development Fundamentals',
-      scheduled_at: '2024-01-15T14:30:00Z',
+      id: 5,
+      title: 'Web Development Basics',
+      scheduled_at: '2025-01-12T14:30:00Z',
       duration: 120,
       status: 'completed',
-      partner: 'Carlos Mendoza',
+      partner: 'Vikram Singh',
       offered_skill: 'Web Development',
-      requested_skill: 'Salsa Dancing',
-      partner_avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=carlos',
+      requested_skill: 'Design',
+      partner_avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=vikram',
       rating: 4,
       feedback: 'Great introduction to backend development!'
-    },
-    {
-      id: 8,
-      title: 'Data Science Introduction',
-      scheduled_at: '2024-01-12T11:00:00Z',
-      duration: 105,
-      status: 'completed',
-      partner: 'Aisha Patel',
-      offered_skill: 'Data Science',
-      requested_skill: 'Yoga',
-      partner_avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=aisha',
-      rating: 5,
-      feedback: 'Amazing teacher! Made complex concepts easy to understand.'
-    },
-    {
-      id: 9,
-      title: 'Cybersecurity Essentials',
-      scheduled_at: '2024-01-10T16:00:00Z',
-      duration: 90,
-      status: 'completed',
-      partner: 'Marcus Thompson',
-      offered_skill: 'Cybersecurity',
-      requested_skill: 'Chess Strategy',
-      partner_avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=marcus',
-      rating: 4,
-      feedback: 'Learned valuable security practices. Very knowledgeable instructor.'
-    },
-    {
-      id: 10,
-      title: 'French Language Practice',
-      scheduled_at: '2024-01-08T19:00:00Z',
-      duration: 60,
-      status: 'completed',
-      partner: 'Lisa Chang',
-      offered_skill: 'French',
-      requested_skill: 'Product Management',
-      partner_avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=lisa',
-      rating: 5,
-      feedback: 'Fantastic conversation practice! Really helped with pronunciation.'
-    },
-    {
-      id: 11,
-      title: 'Mobile App Development',
-      scheduled_at: '2024-01-05T13:30:00Z',
-      duration: 150,
-      status: 'cancelled',
-      partner: 'Ahmed Hassan',
-      offered_skill: 'Mobile Development',
-      requested_skill: 'Arabic Language',
-      partner_avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=ahmed',
-      cancellation_reason: 'Rescheduled due to emergency'
     }
   ];
+
+  const handlePreviousMonth = () => {
+    const newDate = new Date(selectedDate);
+    newDate.setMonth(newDate.getMonth() - 1);
+    setSelectedDate(newDate);
+  };
+
+  const handleNextMonth = () => {
+    const newDate = new Date(selectedDate);
+    newDate.setMonth(newDate.getMonth() + 1);
+    setSelectedDate(newDate);
+  };
+
+  const handleScheduleSession = () => {
+    if (!newSessionDate || !newSessionTime) {
+      alert('Please select both date and time');
+      return;
+    }
+    alert(`✅ Session scheduled for ${newSessionDate} at ${newSessionTime}`);
+    setShowScheduleModal(false);
+    setNewSessionDate('');
+    setNewSessionTime('');
+  };
 
   const getStatusConfig = (status: string) => {
     switch (status) {
@@ -230,15 +181,25 @@ const SessionCalendar = () => {
 
       {/* Calendar Header */}
       <div className="flex items-center justify-between mb-6 p-4 bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl">
-        <button className="p-2 hover:bg-white rounded-lg transition-colors">
+        <motion.button
+          onClick={handlePreviousMonth}
+          className="p-2 hover:bg-white rounded-lg transition-colors"
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.95 }}
+        >
           <ChevronLeft className="w-5 h-5" />
-        </button>
-        <h3 className="text-lg font-semibold">
+        </motion.button>
+        <h3 className="text-lg font-semibold text-gray-900">
           {selectedDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
         </h3>
-        <button className="p-2 hover:bg-white rounded-lg transition-colors">
+        <motion.button
+          onClick={handleNextMonth}
+          className="p-2 hover:bg-white rounded-lg transition-colors"
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.95 }}
+        >
           <ChevronRight className="w-5 h-5" />
-        </button>
+        </motion.button>
       </div>
 
       {/* Sessions List */}
@@ -402,6 +363,7 @@ const SessionCalendar = () => {
       {/* Quick Actions */}
       <div className="mt-8 flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4">
         <motion.button
+          onClick={() => setShowScheduleModal(true)}
           className="flex-1 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-xl font-medium hover:from-blue-600 hover:to-purple-700 transition-all"
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
@@ -409,11 +371,12 @@ const SessionCalendar = () => {
           Schedule New Session
         </motion.button>
         <motion.button
+          onClick={() => setShowCalendarView(!showCalendarView)}
           className="px-6 py-3 border border-gray-300 text-gray-700 rounded-xl font-medium hover:bg-gray-50 transition-colors"
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
         >
-          View Calendar
+          {showCalendarView ? 'Hide Calendar' : 'View Calendar'}
         </motion.button>
       </div>
 
@@ -440,6 +403,135 @@ const SessionCalendar = () => {
             </div>
           </div>
         </div>
+      )}
+
+      {/* Schedule New Session Modal */}
+      {showScheduleModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <motion.div
+            className="bg-white rounded-xl max-w-md w-full p-6"
+            initial={{ scale: 0.95, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+          >
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-lg font-bold text-gray-900">Schedule New Session</h3>
+              <button
+                onClick={() => setShowScheduleModal(false)}
+                className="text-gray-400 hover:text-gray-600"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Date</label>
+                <input
+                  type="date"
+                  value={newSessionDate}
+                  onChange={(e) => setNewSessionDate(e.target.value)}
+                  min={new Date().toISOString().split('T')[0]}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Time</label>
+                <input
+                  type="time"
+                  value={newSessionTime}
+                  onChange={(e) => setNewSessionTime(e.target.value)}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Duration (minutes)</label>
+                <input
+                  type="number"
+                  placeholder="60"
+                  min="15"
+                  max="180"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+
+              <div className="flex space-x-3 pt-4">
+                <button
+                  onClick={() => setShowScheduleModal(false)}
+                  className="flex-1 px-4 py-2 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors font-medium"
+                >
+                  Cancel
+                </button>
+                <motion.button
+                  onClick={handleScheduleSession}
+                  className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  Schedule
+                </motion.button>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      )}
+
+      {/* Calendar Grid View */}
+      {showCalendarView && (
+        <motion.div
+          className="mt-8 p-6 bg-white rounded-xl border border-gray-200"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+        >
+          <h4 className="font-semibold text-gray-900 mb-4">
+            {selectedDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })} Calendar
+          </h4>
+          <div className="grid grid-cols-7 gap-2 mb-4">
+            {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day) => (
+              <div key={day} className="text-center font-bold text-gray-700 p-2 text-sm">
+                {day}
+              </div>
+            ))}
+          </div>
+
+          <div className="grid grid-cols-7 gap-2">
+            {Array.from({ length: 35 }).map((_, index) => {
+              const firstDay = new Date(selectedDate.getFullYear(), selectedDate.getMonth(), 1).getDay();
+              const daysInMonth = new Date(selectedDate.getFullYear(), selectedDate.getMonth() + 1, 0).getDate();
+              let dayNumber = index - firstDay + 1;
+
+              const isCurrentMonth = dayNumber > 0 && dayNumber <= daysInMonth;
+              const hasSession = isCurrentMonth && sessions.some(session => {
+                const sessionDate = new Date(session.scheduled_at);
+                return sessionDate.getDate() === dayNumber &&
+                  sessionDate.getMonth() === selectedDate.getMonth() &&
+                  sessionDate.getFullYear() === selectedDate.getFullYear();
+              });
+
+              return (
+                <div
+                  key={index}
+                  className={`p-3 rounded-lg text-center text-sm font-medium transition-colors ${
+                    isCurrentMonth
+                      ? hasSession
+                        ? 'bg-blue-100 text-blue-900 border-2 border-blue-500'
+                        : 'bg-gray-50 text-gray-900 hover:bg-gray-100'
+                      : 'bg-transparent text-gray-300'
+                  }`}
+                >
+                  {isCurrentMonth && dayNumber}
+                </div>
+              );
+            })}
+          </div>
+
+          <div className="mt-4 p-3 bg-blue-50 rounded-lg border border-blue-200">
+            <p className="text-sm text-blue-900">
+              📌 Highlighted dates have scheduled sessions
+            </p>
+          </div>
+        </motion.div>
       )}
     </motion.div>
   );

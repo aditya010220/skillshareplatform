@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line, PieChart, Pie, Cell } from 'recharts';
@@ -7,12 +6,29 @@ import { TrendingUp, Clock, Target, Award, Calendar, Users } from 'lucide-react'
 const SkillAnalytics = () => {
   const [timeRange, setTimeRange] = useState('week');
 
-  const skillProgressData = [
+  // Week data
+  const weekSkillProgressData = [
+    { skill: 'React', current: 85, target: 90, hours: 12 },
+    { skill: 'Python', current: 70, target: 80, hours: 8 },
+    { skill: 'Design', current: 60, target: 75, hours: 6 },
+    { skill: 'Node.js', current: 40, target: 60, hours: 4 },
+    { skill: 'TypeScript', current: 30, target: 50, hours: 3 }
+  ];
+
+  const monthSkillProgressData = [
     { skill: 'React', current: 85, target: 90, hours: 45 },
     { skill: 'Python', current: 70, target: 80, hours: 32 },
     { skill: 'Design', current: 60, target: 75, hours: 28 },
     { skill: 'Node.js', current: 40, target: 60, hours: 18 },
     { skill: 'TypeScript', current: 30, target: 50, hours: 12 }
+  ];
+
+  const yearSkillProgressData = [
+    { skill: 'React', current: 92, target: 95, hours: 180 },
+    { skill: 'Python', current: 88, target: 90, hours: 145 },
+    { skill: 'Design', current: 82, target: 85, hours: 120 },
+    { skill: 'Node.js', current: 75, target: 80, hours: 95 },
+    { skill: 'TypeScript', current: 78, target: 85, hours: 110 }
   ];
 
   const weeklyActivityData = [
@@ -25,56 +41,197 @@ const SkillAnalytics = () => {
     { day: 'Sun', hours: 3.7, sessions: 2 }
   ];
 
-  const skillCategoryData = [
+  const monthlyActivityData = [
+    { day: 'Week 1', hours: 18.6, sessions: 10 },
+    { day: 'Week 2', hours: 22.3, sessions: 12 },
+    { day: 'Week 3', hours: 19.8, sessions: 11 },
+    { day: 'Week 4', hours: 25.4, sessions: 14 }
+  ];
+
+  const yearlyActivityData = [
+    { day: 'Jan', hours: 95, sessions: 45 },
+    { day: 'Feb', hours: 102, sessions: 48 },
+    { day: 'Mar', hours: 98, sessions: 46 },
+    { day: 'Apr', hours: 110, sessions: 52 },
+    { day: 'May', hours: 105, sessions: 50 },
+    { day: 'Jun', hours: 108, sessions: 51 },
+    { day: 'Jul', hours: 112, sessions: 53 },
+    { day: 'Aug', hours: 106, sessions: 49 },
+    { day: 'Sep', hours: 115, sessions: 54 },
+    { day: 'Oct', hours: 103, sessions: 48 },
+    { day: 'Nov', hours: 109, sessions: 51 },
+    { day: 'Dec', hours: 118, sessions: 55 }
+  ];
+
+  const weekSkillCategoryData = [
+    { name: 'Programming', value: 55, color: '#3B82F6' },
+    { name: 'Design', value: 25, color: '#10B981' },
+    { name: 'Business', value: 15, color: '#F59E0B' },
+    { name: 'Languages', value: 5, color: '#EF4444' }
+  ];
+
+  const monthSkillCategoryData = [
     { name: 'Programming', value: 45, color: '#3B82F6' },
     { name: 'Design', value: 25, color: '#10B981' },
     { name: 'Business', value: 20, color: '#F59E0B' },
     { name: 'Languages', value: 10, color: '#EF4444' }
   ];
 
-  const completionRateData = [
+  const yearSkillCategoryData = [
+    { name: 'Programming', value: 50, color: '#3B82F6' },
+    { name: 'Design', value: 20, color: '#10B981' },
+    { name: 'Business', value: 18, color: '#F59E0B' },
+    { name: 'Languages', value: 12, color: '#EF4444' }
+  ];
+
+  const weekCompletionRateData = [
+    { month: 'Mon', rate: 75 },
+    { month: 'Tue', rate: 82 },
+    { month: 'Wed', rate: 78 },
+    { month: 'Thu', rate: 88 },
+    { month: 'Fri', rate: 80 },
+    { month: 'Sat', rate: 92 },
+    { month: 'Sun', rate: 85 }
+  ];
+
+  const monthCompletionRateData = [
+    { month: 'Week 1', rate: 78 },
+    { month: 'Week 2', rate: 82 },
+    { month: 'Week 3', rate: 85 },
+    { month: 'Week 4', rate: 88 }
+  ];
+
+  const yearCompletionRateData = [
     { month: 'Jan', rate: 78 },
     { month: 'Feb', rate: 82 },
     { month: 'Mar', rate: 85 },
     { month: 'Apr', rate: 88 },
     { month: 'May', rate: 92 },
-    { month: 'Jun', rate: 89 }
+    { month: 'Jun', rate: 89 },
+    { month: 'Jul', rate: 91 },
+    { month: 'Aug', rate: 87 },
+    { month: 'Sep', rate: 93 },
+    { month: 'Oct', rate: 90 },
+    { month: 'Nov', rate: 94 },
+    { month: 'Dec', rate: 96 }
   ];
 
-  const stats = [
-    {
-      title: 'Total Hours',
-      value: '147.5',
-      change: '+12%',
-      positive: true,
-      icon: Clock,
-      color: 'from-blue-500 to-blue-600'
-    },
-    {
-      title: 'Skills Mastered',
-      value: '8',
-      change: '+2',
-      positive: true,
-      icon: Award,
-      color: 'from-green-500 to-green-600'
-    },
-    {
-      title: 'Completion Rate',
-      value: '89%',
-      change: '+5%',
-      positive: true,
-      icon: Target,
-      color: 'from-purple-500 to-purple-600'
-    },
-    {
-      title: 'Active Streak',
-      value: '15 days',
-      change: '+3',
-      positive: true,
-      icon: Calendar,
-      color: 'from-orange-500 to-orange-600'
+  // Get current data based on selected timeRange
+  const skillProgressData = timeRange === 'week' ? weekSkillProgressData : timeRange === 'month' ? monthSkillProgressData : yearSkillProgressData;
+  const activityData = timeRange === 'week' ? weeklyActivityData : timeRange === 'month' ? monthlyActivityData : yearlyActivityData;
+  const skillCategoryData = timeRange === 'week' ? weekSkillCategoryData : timeRange === 'month' ? monthSkillCategoryData : yearSkillCategoryData;
+  const completionRateData = timeRange === 'week' ? weekCompletionRateData : timeRange === 'month' ? monthCompletionRateData : yearCompletionRateData;
+
+  const getStats = () => {
+    if (timeRange === 'week') {
+      return [
+        {
+          title: 'Total Hours',
+          value: '33.4',
+          change: '+8%',
+          positive: true,
+          icon: Clock,
+          color: 'from-blue-500 to-blue-600'
+        },
+        {
+          title: 'Skills Mastered',
+          value: '1',
+          change: '+1',
+          positive: true,
+          icon: Award,
+          color: 'from-green-500 to-green-600'
+        },
+        {
+          title: 'Completion Rate',
+          value: '85%',
+          change: '+2%',
+          positive: true,
+          icon: Target,
+          color: 'from-purple-500 to-purple-600'
+        },
+        {
+          title: 'Active Streak',
+          value: '7 days',
+          change: '+0',
+          positive: true,
+          icon: Calendar,
+          color: 'from-orange-500 to-orange-600'
+        }
+      ];
+    } else if (timeRange === 'month') {
+      return [
+        {
+          title: 'Total Hours',
+          value: '147.5',
+          change: '+12%',
+          positive: true,
+          icon: Clock,
+          color: 'from-blue-500 to-blue-600'
+        },
+        {
+          title: 'Skills Mastered',
+          value: '5',
+          change: '+1',
+          positive: true,
+          icon: Award,
+          color: 'from-green-500 to-green-600'
+        },
+        {
+          title: 'Completion Rate',
+          value: '89%',
+          change: '+4%',
+          positive: true,
+          icon: Target,
+          color: 'from-purple-500 to-purple-600'
+        },
+        {
+          title: 'Active Streak',
+          value: '28 days',
+          change: '+7',
+          positive: true,
+          icon: Calendar,
+          color: 'from-orange-500 to-orange-600'
+        }
+      ];
+    } else {
+      return [
+        {
+          title: 'Total Hours',
+          value: '1,298',
+          change: '+18%',
+          positive: true,
+          icon: Clock,
+          color: 'from-blue-500 to-blue-600'
+        },
+        {
+          title: 'Skills Mastered',
+          value: '12',
+          change: '+5',
+          positive: true,
+          icon: Award,
+          color: 'from-green-500 to-green-600'
+        },
+        {
+          title: 'Completion Rate',
+          value: '90%',
+          change: '+12%',
+          positive: true,
+          icon: Target,
+          color: 'from-purple-500 to-purple-600'
+        },
+        {
+          title: 'Active Streak',
+          value: '365 days',
+          change: '+90',
+          positive: true,
+          icon: Calendar,
+          color: 'from-orange-500 to-orange-600'
+        }
+      ];
     }
-  ];
+  };
+
+  const stats = getStats();
 
   return (
     <motion.div
@@ -151,11 +308,11 @@ const SkillAnalytics = () => {
           </ResponsiveContainer>
         </div>
 
-        {/* Weekly Activity Chart */}
+        {/* Activity Chart */}
         <div className="bg-white rounded-xl shadow-lg p-6">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Weekly Activity</h3>
+          <h3 className="text-lg font-semibold text-gray-900 mb-4">{timeRange === 'week' ? 'Weekly' : timeRange === 'month' ? 'Monthly' : 'Yearly'} Activity</h3>
           <ResponsiveContainer width="100%" height={300}>
-            <LineChart data={weeklyActivityData}>
+            <LineChart data={activityData}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="day" />
               <YAxis />

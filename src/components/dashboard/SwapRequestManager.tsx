@@ -24,11 +24,11 @@ const SwapRequestManager = () => {
       created_at: '2024-01-15T10:30:00Z',
       proposed_duration: 60,
       requester: {
-        full_name: 'Alice Johnson',
+        full_name: 'Priya Sharma',
         avatar_url: null
       },
       recipient: {
-        full_name: 'Bob Smith',
+        full_name: 'Arjun Singh',
         avatar_url: null
       },
       offered_skill: {
@@ -47,11 +47,11 @@ const SwapRequestManager = () => {
       created_at: '2024-01-14T14:20:00Z',
       proposed_duration: 90,
       requester: {
-        full_name: 'Charlie Davis',
+        full_name: 'Rohan Patel',
         avatar_url: null
       },
       recipient: {
-        full_name: 'Alice Johnson',
+        full_name: 'Priya Sharma',
         avatar_url: null
       },
       offered_skill: {
@@ -70,11 +70,11 @@ const SwapRequestManager = () => {
       created_at: '2024-01-12T09:15:00Z',
       proposed_duration: 120,
       requester: {
-        full_name: 'Diana Martinez',
+        full_name: 'Nisha Iyer',
         avatar_url: null
       },
       recipient: {
-        full_name: 'Alice Johnson',
+        full_name: 'Priya Sharma',
         avatar_url: null
       },
       offered_skill: {
@@ -93,11 +93,11 @@ const SwapRequestManager = () => {
       created_at: '2024-01-10T16:45:00Z',
       proposed_duration: 75,
       requester: {
-        full_name: 'Eva Chen',
+        full_name: 'Anjali Reddy',
         avatar_url: null
       },
       recipient: {
-        full_name: 'Alice Johnson',
+        full_name: 'Priya Sharma',
         avatar_url: null
       },
       offered_skill: {
@@ -116,11 +116,11 @@ const SwapRequestManager = () => {
       created_at: '2024-01-16T11:30:00Z',
       proposed_duration: 45,
       requester: {
-        full_name: 'Alice Johnson',
+        full_name: 'Priya Sharma',
         avatar_url: null
       },
       recipient: {
-        full_name: 'Frank Wilson',
+        full_name: 'Vikram Singh',
         avatar_url: null
       },
       offered_skill: {
@@ -139,11 +139,11 @@ const SwapRequestManager = () => {
       created_at: '2024-01-17T08:45:00Z',
       proposed_duration: 90,
       requester: {
-        full_name: 'Michael Torres',
+        full_name: 'Rohit Kumar',
         avatar_url: null
       },
       recipient: {
-        full_name: 'Alice Johnson',
+        full_name: 'Priya Sharma',
         avatar_url: null
       },
       offered_skill: {
@@ -162,11 +162,11 @@ const SwapRequestManager = () => {
       created_at: '2024-01-13T15:20:00Z',
       proposed_duration: 60,
       requester: {
-        full_name: 'Sophie Laurent',
+        full_name: 'Deepika Sharma',
         avatar_url: null
       },
       recipient: {
-        full_name: 'Alice Johnson',
+        full_name: 'Priya Sharma',
         avatar_url: null
       },
       offered_skill: {
@@ -185,11 +185,11 @@ const SwapRequestManager = () => {
       created_at: '2024-01-08T12:30:00Z',
       proposed_duration: 105,
       requester: {
-        full_name: 'Robert Kim',
+        full_name: 'Arjun Kumar',
         avatar_url: null
       },
       recipient: {
-        full_name: 'Alice Johnson',
+        full_name: 'Priya Sharma',
         avatar_url: null
       },
       offered_skill: {
@@ -207,36 +207,73 @@ const SwapRequestManager = () => {
 
   const fetchRequests = async () => {
     try {
+      // Start with showing dummy data immediately for better UX
+      setRequests(dummyRequests);
+      
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) {
-        // Use dummy data when not authenticated for demonstration
-        setRequests(dummyRequests);
         setLoading(false);
         return;
       }
+
+      // Use simpler query first to improve initial load time
+      const { data, error } = await supabase
+        .from('swap_requests')
+        .select(`
+          id,
+          status,
+          message,
+          created_at,
+          proposed_duration,
+          requester:profiles!swap_requests_requester_id_fkey(full_name),
+          offered_skill:skills!swap_requests_offered_skill_id_fkey(name),
+          requested_skill:skills!swap_requests_requested_skill_id_fkey(name)
+        `)
+        .or(`requester_id.eq.${user.id},recipient_id.eq.${user.id}`)
+        .order('created_at', { ascending: false })
+        .limit(10); // Limit initial load to 10 requests
+
+      if (error) throw error;
+      
+      if (data && data.length > 0) {
+        setRequests(data);
+        // Load additional details in background
+        loadAdditionalDetails(data);
+      }
+    } catch (error) {
+      console.error('Error fetching requests:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const loadAdditionalDetails = async (initialData: any[]) => {
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
 
       const { data, error } = await supabase
         .from('swap_requests')
         .select(`
           *,
-          requester:profiles!swap_requests_requester_id_fkey(full_name, avatar_url),
-          recipient:profiles!swap_requests_recipient_id_fkey(full_name, avatar_url),
-          offered_skill:skills!swap_requests_offered_skill_id_fkey(name),
-          requested_skill:skills!swap_requests_requested_skill_id_fkey(name)
+          requester:profiles!swap_requests_requester_id_fkey(avatar_url),
+          recipient:profiles!swap_requests_recipient_id_fkey(full_name, avatar_url)
         `)
         .or(`requester_id.eq.${user.id},recipient_id.eq.${user.id}`)
         .order('created_at', { ascending: false });
 
       if (error) throw error;
       
-      // If no real data, show dummy data
-      setRequests(data && data.length > 0 ? data : dummyRequests);
+      if (data) {
+        // Merge additional details with existing data
+        const updatedRequests = initialData.map(request => ({
+          ...request,
+          ...data.find(d => d.id === request.id)
+        }));
+        setRequests(updatedRequests);
+      }
     } catch (error) {
-      console.error('Error fetching requests:', error);
-      // Fallback to dummy data on error
-      setRequests(dummyRequests);
-    } finally {
-      setLoading(false);
+      console.error('Error loading additional details:', error);
     }
   };
 
@@ -392,10 +429,10 @@ const SwapRequestManager = () => {
               <motion.div
                 key={request.id}
                 className="group border border-gray-200 rounded-xl p-6 hover:shadow-lg hover:border-blue-200 transition-all duration-300 bg-gradient-to-r from-white to-gray-50"
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: 20 }}
-                transition={{ delay: index * 0.05 }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2 }}
                 whileHover={{ scale: 1.01 }}
               >
                 <div className="flex items-start justify-between">
