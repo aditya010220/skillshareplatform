@@ -478,15 +478,16 @@ const SettingsPage = () => {
                   <Label htmlFor="language" className="text-base font-medium">
                     Language
                   </Label>
-                  <Select defaultValue="en">
+                  <Select defaultValue="en-IN" value={profileData.language || 'en-IN'} onValueChange={(value) => setProfileData({...profileData, language: value})}>
                     <SelectTrigger className="mt-2">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
+                      <SelectItem value="en-IN">English (India)</SelectItem>
+                      <SelectItem value="hi">हिन्दी (Hindi)</SelectItem>
                       <SelectItem value="en">English</SelectItem>
                       <SelectItem value="es">Español</SelectItem>
                       <SelectItem value="fr">Français</SelectItem>
-                      <SelectItem value="de">Deutsch</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
