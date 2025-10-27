@@ -2,13 +2,21 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Calendar, Clock, Video, Users, ChevronLeft, ChevronRight, CheckCircle, AlertCircle, X } from 'lucide-react';
 
-const SessionCalendar = () => {
+const SessionCalendar: React.FC<{ selectedPartner?: any }> = ({ selectedPartner }) => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [viewMode, setViewMode] = useState<'upcoming' | 'past' | 'all'>('upcoming');
   const [showScheduleModal, setShowScheduleModal] = useState(false);
   const [showCalendarView, setShowCalendarView] = useState(false);
   const [newSessionDate, setNewSessionDate] = useState('');
   const [newSessionTime, setNewSessionTime] = useState('');
+  const [newSessionPartner, setNewSessionPartner] = useState<any>(null);
+
+  React.useEffect(() => {
+    if (selectedPartner) {
+      setNewSessionPartner(selectedPartner);
+      setShowScheduleModal(true);
+    }
+  }, [selectedPartner]);
 
   // Reduced dummy sessions data
   const sessions = [

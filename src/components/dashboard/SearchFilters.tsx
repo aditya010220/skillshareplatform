@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, Filter, MapPin, Clock, Star, User } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const SearchFilters = () => {
+  const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
   const [filters, setFilters] = useState({
     skill: '',
@@ -75,6 +77,40 @@ const SearchFilters = () => {
 
   const categories = [...new Set(skills.map(skill => skill.category))];
 
+  const filteredResults = results.filter((profile) => {
+    // Search query match
+    const q = searchQuery.trim().toLowerCase();
+    if (q) {
+      const hay = `${profile.full_name} ${profile.bio} ${profile.offeredSkills.join(' ')} ${profile.wantedSkills.join(' ')} ${profile.location}`.toLowerCase();
+      if (!hay.includes(q)) return false;
+    }
+
+    // Skill filter
+    if (filters.skill) {
+      const skillList = [...profile.offeredSkills, ...profile.wantedSkills];
+      if (!skillList.includes(filters.skill)) return false;
+    }
+
+    // Category filter
+    if (filters.category) {
+      const skillNamesInCat = skills.filter((s) => s.category === filters.category).map((s) => s.name);
+      const hasCategory = [...profile.offeredSkills, ...profile.wantedSkills].some((s) => skillNamesInCat.includes(s));
+      if (!hasCategory) return false;
+    }
+
+    // Rating filter
+    if (filters.rating && Number(filters.rating) > 0) {
+      if (profile.rating < Number(filters.rating)) return false;
+    }
+
+    // Location filter
+    if (filters.location) {
+      if (!profile.location.toLowerCase().includes(filters.location.toLowerCase())) return false;
+    }
+
+    return true;
+  });
+
   return (
     <motion.div
       className="bg-white rounded-2xl shadow-lg p-8"
@@ -124,7 +160,7 @@ const SearchFilters = () => {
 
         <select
           value={filters.rating}
-          onChange={(e) => setFilters({...filters, rating: parseInt(e.target.value)})}
+          onChange={(e) => setFilters({...filters, rating: parseFloat(e.target.value)})}
           className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
         >
           <option value={0}>Any Rating</option>
@@ -136,10 +172,10 @@ const SearchFilters = () => {
 
       {/* Results */}
       <div className="space-y-4">
-        <h3 className="text-lg font-semibold text-gray-900">Search Results ({results.length})</h3>
-        
+        <h3 className="text-lg font-semibold text-gray-900">Search Results ({filteredResults.length})</h3>
+
         <AnimatePresence>
-          {results.map((profile, index) => (
+          {filteredResults.map((profile, index) => (
             <motion.div
               key={profile.id}
               className="border border-gray-200 rounded-xl p-6 hover:shadow-md transition-shadow cursor-pointer"
@@ -209,6 +245,8 @@ const SearchFilters = () => {
                     className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 text-sm"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
+                    onClick={() => navigate('/chat', { state: { selectedMember: profile } })}
+                    title={`Message ${profile.full_name}`}
                   >
                     Connect
                   </motion.button>

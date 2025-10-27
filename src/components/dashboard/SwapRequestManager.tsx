@@ -408,7 +408,7 @@ const SwapRequestManager = () => {
           {/* Create Request Button */}
           <motion.button
             onClick={() => setShowCreateModal(true)}
-            className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-4 py-2 rounded-xl font-medium flex items-center space-x-2 hover:shadow-lg transition-all"
+            className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-4 py-2 rounded-xl font-medium flex items-center space-x-2 hover:shadow-lg transition-all"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
@@ -544,7 +544,7 @@ const SwapRequestManager = () => {
                           <span>Chat</span>
                         </motion.button>
                         <motion.button
-                          className="px-4 py-2 bg-purple-500 text-white rounded-xl hover:bg-purple-600 transition-colors flex items-center space-x-2 text-sm font-medium shadow-md"
+                          className="px-4 py-2 bg-indigo-500 text-white rounded-xl hover:bg-indigo-600 transition-colors flex items-center space-x-2 text-sm font-medium shadow-md"
                           whileHover={{ scale: 1.05 }}
                           whileTap={{ scale: 0.95 }}
                         >
@@ -585,7 +585,7 @@ const SwapRequestManager = () => {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5 }}
           >
-            <div className="w-24 h-24 bg-gradient-to-br from-blue-100 to-purple-100 rounded-full flex items-center justify-center mx-auto mb-6">
+            <div className="w-24 h-24 bg-gradient-to-br from-blue-100 to-indigo-100 rounded-full flex items-center justify-center mx-auto mb-6">
               <User className="w-12 h-12 text-blue-500" />
             </div>
             <h3 className="text-xl font-semibold text-gray-900 mb-2">
@@ -599,7 +599,7 @@ const SwapRequestManager = () => {
             </p>
             <motion.button
               onClick={() => setShowCreateModal(true)}
-              className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-6 py-3 rounded-xl font-medium hover:shadow-lg transition-all flex items-center space-x-2 mx-auto"
+              className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-6 py-3 rounded-xl font-medium hover:shadow-lg transition-all flex items-center space-x-2 mx-auto"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -612,7 +612,7 @@ const SwapRequestManager = () => {
 
       {/* Request Statistics */}
       {requests.length > 0 && (
-        <div className="mt-8 p-6 bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl border border-blue-100">
+        <div className="mt-8 p-6 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl border border-blue-100">
           <h4 className="font-semibold text-gray-900 mb-4">Request Summary</h4>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {filterOptions.slice(1).map((option) => (
