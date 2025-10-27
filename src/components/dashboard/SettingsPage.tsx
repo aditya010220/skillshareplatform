@@ -215,10 +215,10 @@ const SettingsPage = () => {
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
+                        <SelectItem value="Asia/Kolkata">India Standard Time (IST)</SelectItem>
+                        <SelectItem value="Asia/Yekaterinburg">Yekaterinburg Time</SelectItem>
+                        <SelectItem value="Europe/London">GMT / BST</SelectItem>
                         <SelectItem value="America/New_York">Eastern Time</SelectItem>
-                        <SelectItem value="America/Chicago">Central Time</SelectItem>
-                        <SelectItem value="America/Denver">Mountain Time</SelectItem>
-                        <SelectItem value="America/Los_Angeles">Pacific Time</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
