@@ -172,9 +172,9 @@ const MentorshipProgram = () => {
           <h2 className="text-2xl font-bold text-gray-900">Mentorship Program</h2>
           <p className="text-gray-600">Connect with mentors or guide others in their journey</p>
         </div>
-        <div className="flex items-center space-x-1 bg-purple-100 px-3 py-1 rounded-full">
-          <Award className="w-4 h-4 text-purple-600" />
-          <span className="text-sm font-medium text-purple-600">Premium Feature</span>
+        <div className="flex items-center space-x-1 bg-indigo-100 px-3 py-1 rounded-full">
+          <Award className="w-4 h-4 text-indigo-600" />
+          <span className="text-sm font-medium text-indigo-600">Premium Feature</span>
         </div>
       </div>
 
@@ -188,7 +188,7 @@ const MentorshipProgram = () => {
               onClick={() => setActiveTab(tab.id)}
               className={`flex items-center space-x-2 px-4 py-2 rounded-lg font-medium transition-all whitespace-nowrap ${
                 activeTab === tab.id
-                  ? 'bg-white text-purple-600 shadow-sm'
+                  ? 'bg-white text-indigo-600 shadow-sm'
                   : 'text-gray-600 hover:text-gray-900'
               }`}
             >
@@ -214,7 +214,7 @@ const MentorshipProgram = () => {
                       placeholder="Search mentors by expertise..."
                       value={searchTerm}
                       onChange={(e) => setSearchTerm(e.target.value)}
-                      className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                      className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
                     />
                   </div>
                 </div>
@@ -254,7 +254,7 @@ const MentorshipProgram = () => {
                       </div>
                     </div>
                     <div className="text-right">
-                      <div className="text-lg font-bold text-purple-600">₹{mentor.hourlyRate * 83}/hr</div>
+                      <div className="text-lg font-bold text-indigo-600">₹{mentor.hourlyRate * 83}/hr</div>
                       <div className="text-xs text-gray-500">{mentor.responseTime}</div>
                     </div>
                   </div>
@@ -267,7 +267,7 @@ const MentorshipProgram = () => {
                       {mentor.expertise.map((skill) => (
                         <span
                           key={skill}
-                          className="px-2 py-1 bg-purple-100 text-purple-800 rounded-full text-xs font-medium"
+                          className="px-2 py-1 bg-indigo-100 text-indigo-800 rounded-full text-xs font-medium"
                         >
                           {skill}
                         </span>
@@ -289,7 +289,7 @@ const MentorshipProgram = () => {
                       </button>
                       <button 
                         onClick={() => handleBookSession(mentor)}
-                        className="flex items-center space-x-1 bg-purple-600 text-white px-3 py-2 rounded-lg hover:bg-purple-700 transition-colors"
+                        className="flex items-center space-x-1 bg-indigo-600 text-white px-3 py-2 rounded-lg hover:bg-indigo-700 transition-colors"
                       >
                         <Calendar className="w-4 h-4" />
                         <span>Book Session</span>
@@ -355,7 +355,7 @@ const MentorshipProgram = () => {
                       <MessageCircle className="w-4 h-4" />
                       <span>Message</span>
                     </button>
-                    <button className="flex items-center space-x-2 bg-purple-100 text-purple-700 px-4 py-2 rounded-lg hover:bg-purple-200 transition-colors">
+                    <button className="flex items-center space-x-2 bg-indigo-100 text-indigo-700 px-4 py-2 rounded-lg hover:bg-purple-200 transition-colors">
                       <Calendar className="w-4 h-4" />
                       <span>Reschedule</span>
                     </button>
@@ -369,7 +369,7 @@ const MentorshipProgram = () => {
                 <p className="text-gray-600 mb-4">Start your mentorship journey by finding a mentor</p>
                 <button
                   onClick={() => setActiveTab('find-mentor')}
-                  className="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors"
+                  className="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition-colors"
                 >
                   Find a Mentor
                 </button>
@@ -401,7 +401,7 @@ const MentorshipProgram = () => {
                         <p className="text-sm text-gray-600">{mentee.level} Level</p>
                       </div>
                       <div className="text-right">
-                        <div className="text-lg font-bold text-purple-600">{mentee.progress}%</div>
+                        <div className="text-lg font-bold text-indigo-600">{mentee.progress}%</div>
                         <div className="text-xs text-gray-500">Progress</div>
                       </div>
                     </div>
@@ -424,7 +424,7 @@ const MentorshipProgram = () => {
                       <div className="text-sm text-gray-500 mb-1">Progress</div>
                       <div className="w-full bg-gray-200 rounded-full h-2">
                         <div
-                          className="bg-gradient-to-r from-purple-500 to-purple-600 h-2 rounded-full"
+                          className="bg-gradient-to-r from-indigo-500 to-indigo-600 h-2 rounded-full"
                           style={{ width: `${mentee.progress}%` }}
                         />
                       </div>
@@ -433,7 +433,7 @@ const MentorshipProgram = () => {
                     <div className="flex space-x-3">
                       <button 
                         onClick={() => handleSendMessage(mentee)}
-                        className="flex items-center space-x-2 bg-purple-600 text-white px-3 py-2 rounded-lg hover:bg-purple-700 transition-colors"
+                        className="flex items-center space-x-2 bg-indigo-600 text-white px-3 py-2 rounded-lg hover:bg-indigo-700 transition-colors"
                       >
                         <MessageCircle className="w-4 h-4" />
                         <span>Message</span>
@@ -453,7 +453,7 @@ const MentorshipProgram = () => {
                 <p className="text-gray-600 mb-4">Start mentoring others by becoming a mentor</p>
                 <button
                   onClick={() => setActiveTab('become-mentor')}
-                  className="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors"
+                  className="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition-colors"
                 >
                   Become a Mentor
                 </button>
@@ -472,7 +472,7 @@ const MentorshipProgram = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
               <div className="text-center p-4 bg-purple-50 rounded-lg">
-                <div className="text-2xl font-bold text-purple-600 mb-2">₹4,150-8,300/hr</div>
+                <div className="text-2xl font-bold text-indigo-600 mb-2">₹4,150-8,300/hr</div>
                 <div className="text-sm text-gray-600">Average Earnings</div>
               </div>
               <div className="text-center p-4 bg-blue-50 rounded-lg">
@@ -500,7 +500,7 @@ const MentorshipProgram = () => {
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">Experience Level</label>
-                <select className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500">
+                <select className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500">
                   <option>3-5 years</option>
                   <option>5-10 years</option>
                   <option>10+ years</option>
@@ -512,7 +512,7 @@ const MentorshipProgram = () => {
                 <input
                   type="number"
                   placeholder="Enter your hourly rate"
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 />
               </div>
 
@@ -521,13 +521,13 @@ const MentorshipProgram = () => {
                 <textarea
                   rows={4}
                   placeholder="Tell us about your experience and what you can teach..."
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 />
               </div>
 
               <button
                 onClick={handleApplyMentor}
-                className="w-full bg-purple-600 text-white py-3 rounded-lg hover:bg-purple-700 transition-colors font-medium"
+                className="w-full bg-indigo-600 text-white py-3 rounded-lg hover:bg-indigo-700 transition-colors font-medium"
               >
                 Apply to Become a Mentor
               </button>
@@ -572,7 +572,7 @@ const MentorshipProgram = () => {
                   value={selectedDate}
                   onChange={(e) => setSelectedDate(e.target.value)}
                   min={new Date().toISOString().split('T')[0]}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 />
               </div>
 
@@ -587,7 +587,7 @@ const MentorshipProgram = () => {
                       onClick={() => setSelectedTime(time)}
                       className={`px-3 py-2 text-sm rounded-lg border transition-colors ${
                         selectedTime === time
-                          ? 'bg-purple-600 text-white border-purple-600'
+                          ? 'bg-indigo-600 text-white border-purple-600'
                           : 'bg-white text-gray-700 border-gray-300 hover:border-purple-500'
                       }`}
                     >
@@ -604,7 +604,7 @@ const MentorshipProgram = () => {
                 <select
                   value={sessionDuration}
                   onChange={(e) => setSessionDuration(e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 >
                   <option value="30">30 minutes</option>
                   <option value="60">1 hour</option>
@@ -622,7 +622,7 @@ const MentorshipProgram = () => {
                 </button>
                 <button
                   onClick={handleConfirmBooking}
-                  className="flex-1 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
+                  className="flex-1 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"
                 >
                   Book Session
                 </button>
@@ -670,7 +670,7 @@ const MentorshipProgram = () => {
                   onChange={(e) => setMessageText(e.target.value)}
                   placeholder="Type your message here..."
                   rows={4}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 />
               </div>
 
@@ -683,7 +683,7 @@ const MentorshipProgram = () => {
                 </button>
                 <button
                   onClick={handleSendMessageSubmit}
-                  className="flex-1 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors flex items-center justify-center space-x-2"
+                  className="flex-1 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors flex items-center justify-center space-x-2"
                 >
                   <Send className="w-4 h-4" />
                   <span>Send</span>
