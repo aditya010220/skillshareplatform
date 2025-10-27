@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, Filter, MapPin, Clock, Star, User } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const SearchFilters = () => {
+  const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
   const [filters, setFilters] = useState({
     skill: '',
