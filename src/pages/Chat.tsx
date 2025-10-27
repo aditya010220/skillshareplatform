@@ -42,16 +42,6 @@ const Chat = () => {
       isOnline: true,
       unreadCount: 1
     },
-    {
-      id: 4,
-      name: 'AI Helper',
-      avatar: '/placeholder.svg',
-      lastMessage: 'How can I help you today?',
-      timestamp: 'Always available',
-      isOnline: true,
-      unreadCount: 0,
-      isAI: true
-    }
   ];
 
   const location = useLocation();
@@ -73,6 +63,13 @@ const Chat = () => {
       setMessages([]);
     }
   }, [location.state]);
+
+  // Load messages for any selected chat
+  useEffect(() => {
+    if (selectedChat) {
+      setMessages(mockMessages);
+    }
+  }, [selectedChat]);
 
   const mockMessages = [
     {
