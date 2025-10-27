@@ -471,7 +471,7 @@ const MentorshipProgram = () => {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-              <div className="text-center p-4 bg-purple-50 rounded-lg">
+              <div className="text-center p-4 bg-indigo-50 rounded-lg">
                 <div className="text-2xl font-bold text-indigo-600 mb-2">₹4,150-8,300/hr</div>
                 <div className="text-sm text-gray-600">Average Earnings</div>
               </div>
@@ -587,7 +587,7 @@ const MentorshipProgram = () => {
                       onClick={() => setSelectedTime(time)}
                       className={`px-3 py-2 text-sm rounded-lg border transition-colors ${
                         selectedTime === time
-                          ? 'bg-indigo-600 text-white border-purple-600'
+                          ? 'bg-indigo-600 text-white border-indigo-600'
                           : 'bg-white text-gray-700 border-gray-300 hover:border-purple-500'
                       }`}
                     >
