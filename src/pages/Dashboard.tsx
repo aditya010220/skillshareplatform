@@ -16,7 +16,7 @@ import {
   useSidebar,
 } from '@/components/ui/sidebar';
 import { supabase } from '@/integrations/supabase/client';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { toast } from 'sonner';
 import UserProfileSummary from '@/components/dashboard/UserProfileSummary';
 import SwapRequestManager from '@/components/dashboard/SwapRequestManager';
@@ -43,7 +43,46 @@ const Dashboard = () => {
   const [profile, setProfile] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('overview');
+  const [calendarSelectedMember, setCalendarSelectedMember] = useState<any>(null);
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // If navigated here with state to open calendar, handle it
+  React.useEffect(() => {
+    try {
+      const state = (location && (location as any).state) || {};
+      if (state.openCalendar) {
+        setActiveTab('calendar');
+        if (state.selectedMember) setCalendarSelectedMember(state.selectedMember);
+        // clear history state so repeated navigation doesn't reopen
+        if (typeof window !== 'undefined' && window.history && window.history.replaceState) {
+          window.history.replaceState({}, document.title);
+        }
+      }
+    } catch (e) {
+      console.error('Failed to handle navigation state for calendar', e);
+    }
+  }, [location]);
+
+  // Load cached session/profile to avoid blocking UI on navigation back
+  React.useEffect(() => {
+    if (typeof window === 'undefined') return;
+    try {
+      const cachedUser = sessionStorage.getItem('ss_user');
+      const cachedProfile = sessionStorage.getItem('ss_profile');
+      if (cachedUser) {
+        setUser(JSON.parse(cachedUser));
+      }
+      if (cachedProfile) {
+        setProfile(JSON.parse(cachedProfile));
+      }
+      if (cachedUser || cachedProfile) {
+        setLoading(false);
+      }
+    } catch (e) {
+      console.error('Error reading cached session/profile', e);
+    }
+  }, []);
 
   useEffect(() => {
     let mounted = true;
@@ -57,6 +96,7 @@ const Dashboard = () => {
         
         if (session?.user) {
           console.log('User is authenticated:', session.user.id);
+          try { sessionStorage.setItem('ss_user', JSON.stringify(session.user)); } catch (e) { console.error('Could not cache user', e); }
           setUser(session.user);
           await fetchUserProfile(session.user);
         } else {
@@ -84,11 +124,13 @@ const Dashboard = () => {
         
         if (session?.user) {
           console.log('User authenticated via state change');
+          try { sessionStorage.setItem('ss_user', JSON.stringify(session.user)); } catch (e) { console.error('Could not cache user', e); }
           setUser(session.user);
           await fetchUserProfile(session.user);
           setLoading(false);
         } else {
           console.log('User signed out, redirecting to home');
+          try { sessionStorage.removeItem('ss_user'); sessionStorage.removeItem('ss_profile'); } catch (e) { /* ignore */ }
           setUser(null);
           setProfile(null);
           navigate('/');
@@ -130,7 +172,9 @@ const Dashboard = () => {
         setProfile(dummyProfile);
       } else {
         console.log('Profile loaded successfully');
-        setProfile(profileData || dummyProfile);
+        const finalProfile = profileData || dummyProfile;
+        setProfile(finalProfile);
+        try { sessionStorage.setItem('ss_profile', JSON.stringify(finalProfile)); } catch (e) { console.error('Could not cache profile', e); }
       }
     } catch (error) {
       console.error('Error fetching profile:', error);
@@ -138,9 +182,32 @@ const Dashboard = () => {
   };
 
   const handleSignOut = async () => {
-    console.log('Signing out...');
-    await supabase.auth.signOut();
-    toast.success('Signed out successfully');
+    try {
+      console.log('Signing out...');
+      const { error } = await supabase.auth.signOut();
+      if (error) {
+        console.error('Sign out error:', error);
+        toast.error('Failed to sign out. Please try again.');
+        return;
+      }
+
+      // Clear local UI state and redirect to home
+      try { sessionStorage.removeItem('ss_user'); sessionStorage.removeItem('ss_profile'); } catch (e) { /* ignore */ }
+      setUser(null);
+      setProfile(null);
+      toast.success('Signed out successfully');
+
+      // Use router navigation; fallback to a hard redirect if routing doesn't trigger
+      try {
+        navigate('/');
+      } catch (navErr) {
+        console.error('Navigation after sign out failed:', navErr);
+        window.location.assign('/');
+      }
+    } catch (err) {
+      console.error('Sign out exception:', err);
+      toast.error('An unexpected error occurred while signing out.');
+    }
   };
 
 
@@ -171,12 +238,9 @@ const Dashboard = () => {
     { id: 'quizzes', label: 'Quizzes', icon: HelpCircle },
     { id: 'requests', label: 'Requests', icon: Bell },
     { id: 'matchmaking', label: 'Find Matches', icon: Users },
-    { id: 'calendar', label: 'Calendar', icon: Calendar },
     { id: 'progress', label: 'Progress', icon: BarChart3 },
     { id: 'achievements', label: 'Achievements', icon: Award },
     { id: 'search', label: 'Search', icon: Search },
-    { id: 'chat', label: 'Chat', icon: MessageCircle },
-    { id: 'settings', label: 'Settings', icon: Settings },
   ];
 
   const DashboardSidebar = () => {
@@ -189,11 +253,11 @@ const Dashboard = () => {
             className="flex items-center space-x-3"
             whileHover={{ scale: 1.02 }}
           >
-            <div className="p-2 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl shadow-lg">
+            <div className="p-2 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-xl shadow-lg">
               <User className="w-6 h-6 text-white" />
             </div>
             {state === 'expanded' && (
-              <span className="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+              <span className="text-xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
                 Dashboard
               </span>
             )}
@@ -218,7 +282,7 @@ const Dashboard = () => {
                       tooltip={state === 'collapsed' ? tab.label : undefined}
                       className={`w-full ${
                         activeTab === tab.id
-                          ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white'
+                          ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white'
                           : 'hover:bg-gray-100'
                       }`}
                     >
@@ -233,11 +297,15 @@ const Dashboard = () => {
         </SidebarContent>
 
         <SidebarFooter className="p-4 space-y-3">
-          <div className="flex items-center space-x-3 p-2">
+          <div
+            onClick={() => setActiveTab('settings')}
+            title="Open Settings"
+            className="flex items-center space-x-3 p-2 cursor-pointer hover:bg-gray-100 rounded-md"
+          >
             <img
               src={profile?.avatar_url}
               alt="Profile"
-              className="w-8 h-8 rounded-full border-2 border-blue-500"
+              className="w-8 h-8 rounded-full border-2 border-indigo-600"
             />
             {state === 'expanded' && (
               <div>
@@ -278,7 +346,7 @@ const Dashboard = () => {
               <div className="flex items-center">
                 <SidebarTrigger className="mr-4" />
                 <motion.h1
-                  className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"
+                  className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent"
                   whileHover={{ scale: 1.05 }}
                 >
                   SkillSwap Dashboard
@@ -287,6 +355,13 @@ const Dashboard = () => {
               
               <div className="flex items-center space-x-4">
                 <NotificationCenter />
+                <button
+                  onClick={() => setActiveTab('calendar')}
+                  className="px-3 py-2 text-gray-700 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
+                  title="Open Calendar"
+                >
+                  Calendar
+                </button>
                 <button
                   onClick={() => navigate('/chat')}
                   className="p-2 text-gray-500 hover:text-blue-500 transition-colors"
@@ -316,7 +391,7 @@ const Dashboard = () => {
               {activeTab === 'quizzes' && <QuizSystem />}
               {activeTab === 'requests' && <SwapRequestManager />}
               {activeTab === 'matchmaking' && <SmartMatchmaking />}
-              {activeTab === 'calendar' && <SessionCalendar />}
+              {activeTab === 'calendar' && <SessionCalendar selectedPartner={calendarSelectedMember} />}
               {activeTab === 'progress' && <ProgressTracking profile={profile} />}
               {activeTab === 'achievements' && <Gamification profile={profile} />}
               {activeTab === 'search' && <SearchFilters />}

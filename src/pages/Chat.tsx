@@ -1,11 +1,9 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowLeft, Send, Bot, User, Users, Search, Phone, Video, MoreVertical } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
-import AIHelper from '@/components/chat/AIHelper';
 
 const Chat = () => {
   const navigate = useNavigate();
@@ -13,49 +11,68 @@ const Chat = () => {
   const [messages, setMessages] = useState<any[]>([]);
   const [newMessage, setNewMessage] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
-  const [showAIHelper, setShowAIHelper] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   // Mock chat data - in real app, this would come from database
   const chats = [
     {
       id: 1,
-      name: 'Sarah Johnson',
-      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=sarah',
-      lastMessage: 'Great session on React hooks!',
+      name: 'Priya Sharma',
+      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=priya-sharma',
+      lastMessage: 'Loved our React session — thanks!',
       timestamp: '2 min ago',
       isOnline: true,
-      unreadCount: 2
+      unreadCount: 2,
+      city: 'Mumbai'
     },
     {
       id: 2,
-      name: 'Michael Chen',
-      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=michael',
-      lastMessage: 'Thanks for the marketing tips',
+      name: 'Rohan Patel',
+      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=rohan-patel',
+      lastMessage: 'Shared some SEO tips in the doc',
       timestamp: '1 hour ago',
       isOnline: false,
-      unreadCount: 0
+      unreadCount: 0,
+      city: 'Bengaluru'
     },
     {
       id: 3,
-      name: 'Emily Rodriguez',
-      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=emily',
-      lastMessage: 'Spanish lesson was amazing!',
+      name: 'Anjali Reddy',
+      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=anjali-reddy',
+      lastMessage: 'Sure — happy to take the Spanish session tomorrow',
       timestamp: '3 hours ago',
       isOnline: true,
-      unreadCount: 1
+      unreadCount: 1,
+      city: 'Hyderabad'
     },
-    {
-      id: 4,
-      name: 'AI Helper',
-      avatar: '/placeholder.svg',
-      lastMessage: 'How can I help you today?',
-      timestamp: 'Always available',
-      isOnline: true,
-      unreadCount: 0,
-      isAI: true
-    }
   ];
+
+  const location = useLocation();
+
+  // If navigated here with a selectedMember, pre-select a chat with them
+  React.useEffect(() => {
+    const sel = (location.state as any)?.selectedMember;
+    if (sel) {
+      const chatObj = {
+        id: sel.id ?? `user-${Date.now()}`,
+        name: sel.full_name || sel.name,
+        avatar: sel.avatar_url || sel.avatar || `https://api.dicebear.com/7.x/avataaars/svg?seed=${sel.full_name || sel.name}`,
+        lastMessage: '',
+        timestamp: 'Just now',
+        isOnline: false,
+        unreadCount: 0
+      };
+      setSelectedChat(chatObj);
+      setMessages([]);
+    }
+  }, [location.state]);
+
+  // Load messages for any selected chat
+  useEffect(() => {
+    if (selectedChat) {
+      setMessages(mockMessages);
+    }
+  }, [selectedChat]);
 
   const mockMessages = [
     {
@@ -68,31 +85,26 @@ const Chat = () => {
     {
       id: 2,
       senderId: 'current-user',
-      content: 'You\'re welcome! I\'m glad you found it helpful',
+      content: 'You\'re welcome! Glad it helped — shall we meet on Zoom?',
       timestamp: new Date(Date.now() - 240000),
       isOwn: true
     },
     {
       id: 3,
       senderId: 1,
-      content: 'Could we schedule another session on advanced hooks?',
+      content: 'Yes — next Wednesday at 4 PM IST works for me',
       timestamp: new Date(Date.now() - 120000),
       isOwn: false
     },
     {
       id: 4,
       senderId: 'current-user',
-      content: 'Absolutely! How about next Tuesday at 3 PM?',
+      content: 'Perfect — I\'ll send the invite.',
       timestamp: new Date(Date.now() - 60000),
       isOwn: true
     }
   ];
 
-  useEffect(() => {
-    if (selectedChat && !selectedChat.isAI) {
-      setMessages(mockMessages);
-    }
-  }, [selectedChat]);
 
   useEffect(() => {
     scrollToBottom();
@@ -119,11 +131,6 @@ const Chat = () => {
 
   const handleChatSelect = (chat: any) => {
     setSelectedChat(chat);
-    if (chat.isAI) {
-      setShowAIHelper(true);
-    } else {
-      setShowAIHelper(false);
-    }
   };
 
   const filteredChats = chats.filter(chat =>
@@ -143,8 +150,9 @@ const Chat = () => {
           <div className="flex items-center justify-between py-6">
             <div className="flex items-center space-x-4">
               <button
-                onClick={() => navigate('/dashboard')}
+                onClick={() => navigate(-1)}
                 className="p-2 text-gray-500 hover:text-blue-500 transition-colors"
+                title="Back"
               >
                 <ArrowLeft className="w-6 h-6" />
               </button>
@@ -154,6 +162,17 @@ const Chat = () => {
                   Chat
                 </h1>
               </div>
+            </div>
+
+            <div className="flex items-center space-x-3">
+              <button
+                onClick={() => navigate('/community')}
+                className="flex items-center px-3 py-2 bg-white border border-gray-200 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors"
+                title="Go to Community"
+              >
+                <Users className="w-4 h-4 mr-2" />
+                <span className="hidden sm:inline">Community</span>
+              </button>
             </div>
           </div>
         </div>
@@ -228,95 +247,89 @@ const Chat = () => {
           <div className="lg:col-span-8 bg-white rounded-2xl shadow-lg flex flex-col">
             {selectedChat ? (
               <>
-                {showAIHelper ? (
-                  <AIHelper />
-                ) : (
-                  <>
-                    {/* Chat Header */}
-                    <div className="p-6 border-b border-gray-200">
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center space-x-3">
-                          <div className="relative">
-                            <img
-                              src={selectedChat.avatar}
-                              alt={selectedChat.name}
-                              className="w-12 h-12 rounded-full border-2 border-blue-500"
-                            />
-                            {selectedChat.isOnline && (
-                              <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white"></div>
-                            )}
-                          </div>
-                          <div>
-                            <h3 className="font-semibold text-gray-900">{selectedChat.name}</h3>
-                            <p className="text-sm text-gray-600">
-                              {selectedChat.isOnline ? 'Online' : 'Last seen 1 hour ago'}
-                            </p>
-                          </div>
-                        </div>
-                        <div className="flex items-center space-x-2">
-                          <button className="p-2 text-gray-500 hover:text-blue-500 transition-colors">
-                            <Phone className="w-5 h-5" />
-                          </button>
-                          <button className="p-2 text-gray-500 hover:text-blue-500 transition-colors">
-                            <Video className="w-5 h-5" />
-                          </button>
-                          <button className="p-2 text-gray-500 hover:text-blue-500 transition-colors">
-                            <MoreVertical className="w-5 h-5" />
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Messages */}
-                    <div className="flex-1 overflow-y-auto p-6 space-y-4">
-                      {messages.map((message) => (
-                        <motion.div
-                          key={message.id}
-                          className={`flex ${message.isOwn ? 'justify-end' : 'justify-start'}`}
-                          initial={{ opacity: 0, y: 10 }}
-                          animate={{ opacity: 1, y: 0 }}
-                        >
-                          <div className={`max-w-xs lg:max-w-md px-4 py-2 rounded-lg ${
-                            message.isOwn
-                              ? 'bg-blue-600 text-white'
-                              : 'bg-gray-100 text-gray-900'
-                          }`}>
-                            <p className="text-sm">{message.content}</p>
-                            <p className={`text-xs mt-1 ${
-                              message.isOwn ? 'text-blue-200' : 'text-gray-500'
-                            }`}>
-                              {message.timestamp.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
-                            </p>
-                          </div>
-                        </motion.div>
-                      ))}
-                      <div ref={messagesEndRef} />
-                    </div>
-
-                    {/* Message Input */}
-                    <div className="p-6 border-t border-gray-200">
-                      <div className="flex items-center space-x-4">
-                        <input
-                          type="text"
-                          value={newMessage}
-                          onChange={(e) => setNewMessage(e.target.value)}
-                          onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
-                          placeholder="Type a message..."
-                          className="flex-1 border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                {/* Chat Header */}
+                <div className="p-6 border-b border-gray-200">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-3">
+                      <div className="relative">
+                        <img
+                          src={selectedChat.avatar}
+                          alt={selectedChat.name}
+                          className="w-12 h-12 rounded-full border-2 border-blue-500"
                         />
-                        <motion.button
-                          onClick={handleSendMessage}
-                          disabled={!newMessage.trim()}
-                          className="bg-blue-600 text-white p-2 rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                          whileHover={{ scale: 1.05 }}
-                          whileTap={{ scale: 0.95 }}
-                        >
-                          <Send className="w-5 h-5" />
-                        </motion.button>
+                        {selectedChat.isOnline && (
+                          <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white"></div>
+                        )}
+                      </div>
+                      <div>
+                        <h3 className="font-semibold text-gray-900">{selectedChat.name}</h3>
+                        <p className="text-sm text-gray-600">
+                          {selectedChat.isOnline ? 'Online' : 'Last seen 1 hour ago'}
+                        </p>
                       </div>
                     </div>
-                  </>
-                )}
+                    <div className="flex items-center space-x-2">
+                      <button className="p-2 text-gray-500 hover:text-blue-500 transition-colors">
+                        <Phone className="w-5 h-5" />
+                      </button>
+                      <button className="p-2 text-gray-500 hover:text-blue-500 transition-colors">
+                        <Video className="w-5 h-5" />
+                      </button>
+                      <button className="p-2 text-gray-500 hover:text-blue-500 transition-colors">
+                        <MoreVertical className="w-5 h-5" />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Messages */}
+                <div className="flex-1 overflow-y-auto p-6 space-y-4">
+                  {messages.map((message) => (
+                    <motion.div
+                      key={message.id}
+                      className={`flex ${message.isOwn ? 'justify-end' : 'justify-start'}`}
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                    >
+                      <div className={`max-w-xs lg:max-w-md px-4 py-2 rounded-lg ${
+                        message.isOwn
+                          ? 'bg-blue-600 text-white'
+                          : 'bg-gray-100 text-gray-900'
+                      }`}>
+                        <p className="text-sm">{message.content}</p>
+                        <p className={`text-xs mt-1 ${
+                          message.isOwn ? 'text-blue-200' : 'text-gray-500'
+                        }`}>
+                          {message.timestamp.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
+                        </p>
+                      </div>
+                    </motion.div>
+                  ))}
+                  <div ref={messagesEndRef} />
+                </div>
+
+                {/* Message Input */}
+                <div className="p-6 border-t border-gray-200">
+                  <div className="flex items-center space-x-4">
+                    <input
+                      type="text"
+                      value={newMessage}
+                      onChange={(e) => setNewMessage(e.target.value)}
+                      onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
+                      placeholder="Type a message..."
+                      className="flex-1 border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                    <motion.button
+                      onClick={handleSendMessage}
+                      disabled={!newMessage.trim()}
+                      className="bg-blue-600 text-white p-2 rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      <Send className="w-5 h-5" />
+                    </motion.button>
+                  </div>
+                </div>
               </>
             ) : (
               <div className="flex-1 flex items-center justify-center">

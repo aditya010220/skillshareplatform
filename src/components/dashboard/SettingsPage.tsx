@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { 
@@ -33,11 +32,12 @@ const SettingsPage = () => {
   const [activeSection, setActiveSection] = useState('profile');
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [profileData, setProfileData] = useState({
-    fullName: 'John Doe',
-    email: 'john.doe@example.com',
-    bio: 'Passionate learner and teacher. Love sharing knowledge!',
-    location: 'New York, USA',
-    timezone: 'America/New_York'
+    fullName: 'Aarav Kumar',
+    email: 'aarav.kumar@example.com',
+    bio: 'Passionate learner and teacher. Love sharing knowledge and discovering new skills!',
+    location: 'Mumbai, India',
+    phone: '+91',
+    timezone: 'Asia/Kolkata'
   });
   
   const [notifications, setNotifications] = useState({
@@ -209,16 +209,25 @@ const SettingsPage = () => {
                     />
                   </div>
                   <div>
+                    <Label htmlFor="phone">Phone</Label>
+                    <Input
+                      id="phone"
+                      value={profileData.phone}
+                      onChange={(e) => setProfileData({...profileData, phone: e.target.value})}
+                      placeholder="+91"
+                    />
+                  </div>
+                  <div>
                     <Label htmlFor="timezone">Timezone</Label>
                     <Select value={profileData.timezone} onValueChange={(value) => setProfileData({...profileData, timezone: value})}>
                       <SelectTrigger>
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
+                        <SelectItem value="Asia/Kolkata">India Standard Time (IST)</SelectItem>
+                        <SelectItem value="Asia/Yekaterinburg">Yekaterinburg Time</SelectItem>
+                        <SelectItem value="Europe/London">GMT / BST</SelectItem>
                         <SelectItem value="America/New_York">Eastern Time</SelectItem>
-                        <SelectItem value="America/Chicago">Central Time</SelectItem>
-                        <SelectItem value="America/Denver">Mountain Time</SelectItem>
-                        <SelectItem value="America/Los_Angeles">Pacific Time</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
@@ -469,15 +478,16 @@ const SettingsPage = () => {
                   <Label htmlFor="language" className="text-base font-medium">
                     Language
                   </Label>
-                  <Select defaultValue="en">
+                  <Select defaultValue="en-IN" value={profileData.language || 'en-IN'} onValueChange={(value) => setProfileData({...profileData, language: value})}>
                     <SelectTrigger className="mt-2">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
+                      <SelectItem value="en-IN">English (India)</SelectItem>
+                      <SelectItem value="hi">हिन्दी (Hindi)</SelectItem>
                       <SelectItem value="en">English</SelectItem>
                       <SelectItem value="es">Español</SelectItem>
                       <SelectItem value="fr">Français</SelectItem>
-                      <SelectItem value="de">Deutsch</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
