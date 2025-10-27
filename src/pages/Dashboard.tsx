@@ -338,10 +338,10 @@ const Dashboard = () => {
                 <NotificationCenter />
                 <button
                   onClick={() => setActiveTab('calendar')}
-                  className="p-2 text-gray-500 hover:text-blue-500 transition-colors"
+                  className="px-3 py-2 text-gray-700 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
                   title="Open Calendar"
                 >
-                  <Calendar className="w-5 h-5" />
+                  Calendar
                 </button>
                 <button
                   onClick={() => navigate('/chat')}
