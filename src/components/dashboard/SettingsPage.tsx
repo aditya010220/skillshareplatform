@@ -209,6 +209,15 @@ const SettingsPage = () => {
                     />
                   </div>
                   <div>
+                    <Label htmlFor="phone">Phone</Label>
+                    <Input
+                      id="phone"
+                      value={profileData.phone}
+                      onChange={(e) => setProfileData({...profileData, phone: e.target.value})}
+                      placeholder="+91"
+                    />
+                  </div>
+                  <div>
                     <Label htmlFor="timezone">Timezone</Label>
                     <Select value={profileData.timezone} onValueChange={(value) => setProfileData({...profileData, timezone: value})}>
                       <SelectTrigger>
