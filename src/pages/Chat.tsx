@@ -102,11 +102,6 @@ const Chat = () => {
     }
   ];
 
-  useEffect(() => {
-    if (selectedChat && !selectedChat.isAI) {
-      setMessages(mockMessages);
-    }
-  }, [selectedChat]);
 
   useEffect(() => {
     scrollToBottom();
@@ -237,95 +232,89 @@ const Chat = () => {
           <div className="lg:col-span-8 bg-white rounded-2xl shadow-lg flex flex-col">
             {selectedChat ? (
               <>
-                {showAIHelper ? (
-                  <AIHelper />
-                ) : (
-                  <>
-                    {/* Chat Header */}
-                    <div className="p-6 border-b border-gray-200">
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center space-x-3">
-                          <div className="relative">
-                            <img
-                              src={selectedChat.avatar}
-                              alt={selectedChat.name}
-                              className="w-12 h-12 rounded-full border-2 border-blue-500"
-                            />
-                            {selectedChat.isOnline && (
-                              <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white"></div>
-                            )}
-                          </div>
-                          <div>
-                            <h3 className="font-semibold text-gray-900">{selectedChat.name}</h3>
-                            <p className="text-sm text-gray-600">
-                              {selectedChat.isOnline ? 'Online' : 'Last seen 1 hour ago'}
-                            </p>
-                          </div>
-                        </div>
-                        <div className="flex items-center space-x-2">
-                          <button className="p-2 text-gray-500 hover:text-blue-500 transition-colors">
-                            <Phone className="w-5 h-5" />
-                          </button>
-                          <button className="p-2 text-gray-500 hover:text-blue-500 transition-colors">
-                            <Video className="w-5 h-5" />
-                          </button>
-                          <button className="p-2 text-gray-500 hover:text-blue-500 transition-colors">
-                            <MoreVertical className="w-5 h-5" />
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Messages */}
-                    <div className="flex-1 overflow-y-auto p-6 space-y-4">
-                      {messages.map((message) => (
-                        <motion.div
-                          key={message.id}
-                          className={`flex ${message.isOwn ? 'justify-end' : 'justify-start'}`}
-                          initial={{ opacity: 0, y: 10 }}
-                          animate={{ opacity: 1, y: 0 }}
-                        >
-                          <div className={`max-w-xs lg:max-w-md px-4 py-2 rounded-lg ${
-                            message.isOwn
-                              ? 'bg-blue-600 text-white'
-                              : 'bg-gray-100 text-gray-900'
-                          }`}>
-                            <p className="text-sm">{message.content}</p>
-                            <p className={`text-xs mt-1 ${
-                              message.isOwn ? 'text-blue-200' : 'text-gray-500'
-                            }`}>
-                              {message.timestamp.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
-                            </p>
-                          </div>
-                        </motion.div>
-                      ))}
-                      <div ref={messagesEndRef} />
-                    </div>
-
-                    {/* Message Input */}
-                    <div className="p-6 border-t border-gray-200">
-                      <div className="flex items-center space-x-4">
-                        <input
-                          type="text"
-                          value={newMessage}
-                          onChange={(e) => setNewMessage(e.target.value)}
-                          onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
-                          placeholder="Type a message..."
-                          className="flex-1 border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                {/* Chat Header */}
+                <div className="p-6 border-b border-gray-200">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-3">
+                      <div className="relative">
+                        <img
+                          src={selectedChat.avatar}
+                          alt={selectedChat.name}
+                          className="w-12 h-12 rounded-full border-2 border-blue-500"
                         />
-                        <motion.button
-                          onClick={handleSendMessage}
-                          disabled={!newMessage.trim()}
-                          className="bg-blue-600 text-white p-2 rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                          whileHover={{ scale: 1.05 }}
-                          whileTap={{ scale: 0.95 }}
-                        >
-                          <Send className="w-5 h-5" />
-                        </motion.button>
+                        {selectedChat.isOnline && (
+                          <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white"></div>
+                        )}
+                      </div>
+                      <div>
+                        <h3 className="font-semibold text-gray-900">{selectedChat.name}</h3>
+                        <p className="text-sm text-gray-600">
+                          {selectedChat.isOnline ? 'Online' : 'Last seen 1 hour ago'}
+                        </p>
                       </div>
                     </div>
-                  </>
-                )}
+                    <div className="flex items-center space-x-2">
+                      <button className="p-2 text-gray-500 hover:text-blue-500 transition-colors">
+                        <Phone className="w-5 h-5" />
+                      </button>
+                      <button className="p-2 text-gray-500 hover:text-blue-500 transition-colors">
+                        <Video className="w-5 h-5" />
+                      </button>
+                      <button className="p-2 text-gray-500 hover:text-blue-500 transition-colors">
+                        <MoreVertical className="w-5 h-5" />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Messages */}
+                <div className="flex-1 overflow-y-auto p-6 space-y-4">
+                  {messages.map((message) => (
+                    <motion.div
+                      key={message.id}
+                      className={`flex ${message.isOwn ? 'justify-end' : 'justify-start'}`}
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                    >
+                      <div className={`max-w-xs lg:max-w-md px-4 py-2 rounded-lg ${
+                        message.isOwn
+                          ? 'bg-blue-600 text-white'
+                          : 'bg-gray-100 text-gray-900'
+                      }`}>
+                        <p className="text-sm">{message.content}</p>
+                        <p className={`text-xs mt-1 ${
+                          message.isOwn ? 'text-blue-200' : 'text-gray-500'
+                        }`}>
+                          {message.timestamp.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
+                        </p>
+                      </div>
+                    </motion.div>
+                  ))}
+                  <div ref={messagesEndRef} />
+                </div>
+
+                {/* Message Input */}
+                <div className="p-6 border-t border-gray-200">
+                  <div className="flex items-center space-x-4">
+                    <input
+                      type="text"
+                      value={newMessage}
+                      onChange={(e) => setNewMessage(e.target.value)}
+                      onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
+                      placeholder="Type a message..."
+                      className="flex-1 border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                    <motion.button
+                      onClick={handleSendMessage}
+                      disabled={!newMessage.trim()}
+                      className="bg-blue-600 text-white p-2 rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      <Send className="w-5 h-5" />
+                    </motion.button>
+                  </div>
+                </div>
               </>
             ) : (
               <div className="flex-1 flex items-center justify-center">
