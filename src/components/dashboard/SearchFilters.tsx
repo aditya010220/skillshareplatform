@@ -75,6 +75,40 @@ const SearchFilters = () => {
 
   const categories = [...new Set(skills.map(skill => skill.category))];
 
+  const filteredResults = results.filter((profile) => {
+    // Search query match
+    const q = searchQuery.trim().toLowerCase();
+    if (q) {
+      const hay = `${profile.full_name} ${profile.bio} ${profile.offeredSkills.join(' ')} ${profile.wantedSkills.join(' ')} ${profile.location}`.toLowerCase();
+      if (!hay.includes(q)) return false;
+    }
+
+    // Skill filter
+    if (filters.skill) {
+      const skillList = [...profile.offeredSkills, ...profile.wantedSkills];
+      if (!skillList.includes(filters.skill)) return false;
+    }
+
+    // Category filter
+    if (filters.category) {
+      const skillNamesInCat = skills.filter((s) => s.category === filters.category).map((s) => s.name);
+      const hasCategory = [...profile.offeredSkills, ...profile.wantedSkills].some((s) => skillNamesInCat.includes(s));
+      if (!hasCategory) return false;
+    }
+
+    // Rating filter
+    if (filters.rating && Number(filters.rating) > 0) {
+      if (profile.rating < Number(filters.rating)) return false;
+    }
+
+    // Location filter
+    if (filters.location) {
+      if (!profile.location.toLowerCase().includes(filters.location.toLowerCase())) return false;
+    }
+
+    return true;
+  });
+
   return (
     <motion.div
       className="bg-white rounded-2xl shadow-lg p-8"
