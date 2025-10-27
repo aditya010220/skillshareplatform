@@ -138,9 +138,31 @@ const Dashboard = () => {
   };
 
   const handleSignOut = async () => {
-    console.log('Signing out...');
-    await supabase.auth.signOut();
-    toast.success('Signed out successfully');
+    try {
+      console.log('Signing out...');
+      const { error } = await supabase.auth.signOut();
+      if (error) {
+        console.error('Sign out error:', error);
+        toast.error('Failed to sign out. Please try again.');
+        return;
+      }
+
+      // Clear local UI state and redirect to home
+      setUser(null);
+      setProfile(null);
+      toast.success('Signed out successfully');
+
+      // Use router navigation; fallback to a hard redirect if routing doesn't trigger
+      try {
+        navigate('/');
+      } catch (navErr) {
+        console.error('Navigation after sign out failed:', navErr);
+        window.location.assign('/');
+      }
+    } catch (err) {
+      console.error('Sign out exception:', err);
+      toast.error('An unexpected error occurred while signing out.');
+    }
   };
 
 
