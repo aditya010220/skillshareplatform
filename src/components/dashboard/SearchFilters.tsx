@@ -245,6 +245,8 @@ const SearchFilters = () => {
                     className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 text-sm"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
+                    onClick={() => navigate('/chat', { state: { selectedMember: profile } })}
+                    title={`Message ${profile.full_name}`}
                   >
                     Connect
                   </motion.button>
