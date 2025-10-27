@@ -305,7 +305,7 @@ const SettingsPage = () => {
       const tables = [
         { key: 'profile', query: supabase.from('profiles').select('*').eq('id', user.id).single() },
         { key: 'swap_requests_mine', query: supabase.from('swap_requests').select('*').or(`requester_id.eq.${user.id},recipient_id.eq.${user.id}`) },
-        { key: 'ratings_mine', query: supabase.from('ratings').select('*').eq('user_id', user.id) },
+        { key: 'ratings_mine', query: supabase.from('ratings').select('*').or(`rater_id.eq.${user.id},rated_id.eq.${user.id}`) },
         { key: 'notifications_mine', query: supabase.from('notifications').select('*').eq('user_id', user.id) },
       ];
       for (const t of tables) {
