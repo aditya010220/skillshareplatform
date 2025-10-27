@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { 
@@ -33,11 +32,12 @@ const SettingsPage = () => {
   const [activeSection, setActiveSection] = useState('profile');
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [profileData, setProfileData] = useState({
-    fullName: 'John Doe',
-    email: 'john.doe@example.com',
-    bio: 'Passionate learner and teacher. Love sharing knowledge!',
-    location: 'New York, USA',
-    timezone: 'America/New_York'
+    fullName: 'Aarav Kumar',
+    email: 'aarav.kumar@example.com',
+    bio: 'Passionate learner and teacher. Love sharing knowledge and discovering new skills!',
+    location: 'Mumbai, India',
+    phone: '+91',
+    timezone: 'Asia/Kolkata'
   });
   
   const [notifications, setNotifications] = useState({
