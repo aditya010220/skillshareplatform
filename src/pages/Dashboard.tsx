@@ -175,8 +175,6 @@ const Dashboard = () => {
     { id: 'progress', label: 'Progress', icon: BarChart3 },
     { id: 'achievements', label: 'Achievements', icon: Award },
     { id: 'search', label: 'Search', icon: Search },
-    { id: 'chat', label: 'Chat', icon: MessageCircle },
-    { id: 'settings', label: 'Settings', icon: Settings },
   ];
 
   const DashboardSidebar = () => {
