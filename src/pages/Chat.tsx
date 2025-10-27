@@ -147,8 +147,9 @@ const Chat = () => {
           <div className="flex items-center justify-between py-6">
             <div className="flex items-center space-x-4">
               <button
-                onClick={() => navigate('/dashboard')}
+                onClick={() => navigate(-1)}
                 className="p-2 text-gray-500 hover:text-blue-500 transition-colors"
+                title="Back"
               >
                 <ArrowLeft className="w-6 h-6" />
               </button>
