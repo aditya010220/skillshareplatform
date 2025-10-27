@@ -170,10 +170,10 @@ const SearchFilters = () => {
 
       {/* Results */}
       <div className="space-y-4">
-        <h3 className="text-lg font-semibold text-gray-900">Search Results ({results.length})</h3>
-        
+        <h3 className="text-lg font-semibold text-gray-900">Search Results ({filteredResults.length})</h3>
+
         <AnimatePresence>
-          {results.map((profile, index) => (
+          {filteredResults.map((profile, index) => (
             <motion.div
               key={profile.id}
               className="border border-gray-200 rounded-xl p-6 hover:shadow-md transition-shadow cursor-pointer"
