@@ -133,11 +133,6 @@ const Chat = () => {
 
   const handleChatSelect = (chat: any) => {
     setSelectedChat(chat);
-    if (chat.isAI) {
-      setShowAIHelper(true);
-    } else {
-      setShowAIHelper(false);
-    }
   };
 
   const filteredChats = chats.filter(chat =>
