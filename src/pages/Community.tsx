@@ -98,7 +98,7 @@ const Community = () => {
   ];
 
   const categories = ['All', 'Programming', 'Design', 'Marketing', 'Languages', 'Creative', 'Business', 'Health'];
-  const locations = ['All', 'San Francisco, CA', 'New York, NY', 'Austin, TX', 'Seattle, WA', 'Chicago, IL', 'Miami, FL'];
+  const locations = ['All', 'Mumbai, India', 'Bengaluru, India', 'Hyderabad, India', 'Delhi, India', 'Pune, India', 'Chennai, India'];
 
   const filteredMembers = communityMembers.filter(member => {
     const matchesSearch = member.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
