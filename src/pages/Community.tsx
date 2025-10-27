@@ -124,7 +124,8 @@ const Community = () => {
 
   const handleSchedule = (member: any) => {
     console.log('Scheduling with:', member.name);
-    // Here you would implement the scheduling logic
+    // Navigate to dashboard and open calendar with selected member
+    navigate('/dashboard', { state: { openCalendar: true, selectedMember: member } });
   };
 
   return (
