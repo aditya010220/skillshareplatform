@@ -234,11 +234,11 @@ const Dashboard = () => {
             className="flex items-center space-x-3"
             whileHover={{ scale: 1.02 }}
           >
-            <div className="p-2 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl shadow-lg">
+            <div className="p-2 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-xl shadow-lg">
               <User className="w-6 h-6 text-white" />
             </div>
             {state === 'expanded' && (
-              <span className="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+              <span className="text-xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
                 Dashboard
               </span>
             )}
@@ -263,7 +263,7 @@ const Dashboard = () => {
                       tooltip={state === 'collapsed' ? tab.label : undefined}
                       className={`w-full ${
                         activeTab === tab.id
-                          ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white'
+                          ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white'
                           : 'hover:bg-gray-100'
                       }`}
                     >
@@ -286,7 +286,7 @@ const Dashboard = () => {
             <img
               src={profile?.avatar_url}
               alt="Profile"
-              className="w-8 h-8 rounded-full border-2 border-blue-500"
+              className="w-8 h-8 rounded-full border-2 border-indigo-600"
             />
             {state === 'expanded' && (
               <div>
@@ -327,7 +327,7 @@ const Dashboard = () => {
               <div className="flex items-center">
                 <SidebarTrigger className="mr-4" />
                 <motion.h1
-                  className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"
+                  className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent"
                   whileHover={{ scale: 1.05 }}
                 >
                   SkillSwap Dashboard
