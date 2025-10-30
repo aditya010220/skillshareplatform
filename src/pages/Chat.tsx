@@ -30,7 +30,7 @@ const Chat = () => {
       name: 'Rohan Patel',
       avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=rohan-patel',
       lastMessage: 'Shared some SEO tips in the doc',
-      timestamp: '1 hour ago',
+      timestamp: '1 hour ago - Bengaluru',
       isOnline: false,
       unreadCount: 0,
       city: 'Bengaluru'
