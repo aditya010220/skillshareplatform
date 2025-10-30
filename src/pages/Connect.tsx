@@ -116,7 +116,7 @@ const Connect = () => {
   ];
 
   const categories = ['Programming', 'Design', 'Marketing', 'Languages', 'Creative', 'Business', 'Health'];
-  const locations = ['San Francisco, CA', 'New York, NY', 'Austin, TX', 'Seattle, WA', 'Chicago, IL', 'Miami, FL'];
+  const locations = ['Mumbai, MH', 'Bengaluru, KA', 'New Delhi, DL', 'Pune, MH', 'Hyderabad, TG', 'Kolkata, WB'];
 
   const handleConnect = (person: any) => {
     console.log('Connecting with:', person.name);
