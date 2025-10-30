@@ -520,6 +520,7 @@ const Dashboard = () => {
               {activeTab === 'analytics' && <SkillAnalytics />}
               {activeTab === 'goals' && <GoalTracker />}
               {activeTab === 'mentorship' && <MentorshipProgram />}
+              {activeTab === 'mentorship-requests' && <MentorshipRequests />}
               {activeTab === 'certificates' && <CertificationSystem />}
               {activeTab === 'ai-assistant' && <AILearningAssistant />}
               {activeTab === 'quizzes' && <QuizSystem />}
