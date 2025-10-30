@@ -419,23 +419,6 @@ const Dashboard = () => {
             </SidebarGroupContent>
           </SidebarGroup>
 
-          {/* Achievements Section */}
-          <SidebarGroup>
-            <SidebarGroupLabel>Achievements</SidebarGroupLabel>
-            <SidebarGroupContent>
-              <SidebarMenu>
-                <SidebarMenuItem>
-                  <SidebarMenuButton
-                    onClick={() => setActiveTab('achievements')}
-                    tooltip={state === 'collapsed' ? 'Achievements' : undefined}
-                    className={`w-full ${activeTab === 'achievements' ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white' : 'hover:bg-gray-100'}`}>
-                    <Award className="w-4 h-4" />
-                    {state === 'expanded' && <span>Achievements</span>}
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              </SidebarMenu>
-            </SidebarGroupContent>
-          </SidebarGroup>
 
 
         </SidebarContent>
