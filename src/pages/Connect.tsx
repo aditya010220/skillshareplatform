@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowLeft, MessageCircle, Video, Calendar, Star, MapPin, Filter, Search } from 'lucide-react';
@@ -10,109 +9,109 @@ const Connect = () => {
   const [selectedCategory, setSelectedCategory] = useState('');
   const [selectedLocation, setSelectedLocation] = useState('');
 
-  // Dummy data for people to connect with
+  // Dummy data for people to connect with (Indian data)
   const people = [
     {
       id: 1,
-      name: 'Sarah Johnson',
+      name: 'Priya Sharma',
       title: 'Full-Stack Developer & UI/UX Designer',
-      bio: 'Passionate about creating beautiful and functional web applications. Love teaching React and learning new design trends.',
-      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=sarah',
+      bio: 'Full-stack developer from Mumbai who loves teaching React and improving product UX. Available for mentorship and pair-programming.',
+      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=priya_sharma',
       rating: 4.9,
       sessions: 28,
-      location: 'San Francisco, CA',
+      location: 'Mumbai, MH',
       skills: {
         teaching: ['React', 'JavaScript', 'Node.js', 'UI/UX Design'],
-        learning: ['Python', 'Data Science', 'Machine Learning']
+        learning: ['Data Science', 'DevOps', 'Figma']
       },
-      badges: ['Expert Teacher', 'Community Helper', 'Top Rated'],
+      badges: ['Top Mentor', 'Community Helper', 'React Expert'],
       availability: 'Available now',
-      languages: ['English', 'Spanish']
+      languages: ['English', 'Hindi', 'Marathi']
     },
     {
       id: 2,
-      name: 'Mike Chen',
-      title: 'Digital Marketing Specialist & Musician',
-      bio: 'Marketing professional by day, music enthusiast by night. Love sharing marketing strategies and learning new instruments.',
-      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=mike',
+      name: 'Rohan Patel',
+      title: 'Digital Marketing Specialist & Guitar Enthusiast',
+      bio: 'Bengaluru-based digital marketer who also teaches basic guitar. Loves combining creativity with data-driven marketing.',
+      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=rohan_patel',
       rating: 4.8,
       sessions: 35,
-      location: 'New York, NY',
+      location: 'Bengaluru, KA',
       skills: {
         teaching: ['Digital Marketing', 'SEO', 'Content Strategy', 'Guitar'],
-        learning: ['Piano', 'Music Production', 'Photography']
+        learning: ['Python', 'Data Analysis', 'Photography']
       },
       badges: ['Marketing Guru', 'Music Mentor'],
       availability: 'Available tomorrow',
-      languages: ['English', 'Mandarin']
+      languages: ['English', 'Kannada', 'Hindi']
     },
     {
       id: 3,
-      name: 'Emily Rodriguez',
-      title: 'Professional Photographer & Language Teacher',
-      bio: 'Capturing moments and teaching languages are my passions. Always excited to help others see the world through different lenses.',
-      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=emily',
+      name: 'Anjali Reddy',
+      title: 'Professional Photographer & Language Coach',
+      bio: 'Photographer from Hyderabad with experience in teaching composition and photo-editing. Offers lessons and portfolio reviews.',
+      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=anjali_reddy',
       rating: 4.7,
       sessions: 22,
-      location: 'Austin, TX',
+      location: 'Hyderabad, TG',
       skills: {
-        teaching: ['Photography', 'Spanish', 'Adobe Lightroom', 'Travel Planning'],
-        learning: ['Video Editing', 'Cooking', 'Yoga']
+        teaching: ['Photography', 'Lightroom', 'Storytelling'],
+        learning: ['Video Editing', 'Cooking', 'Spanish']
       },
-      badges: ['Photo Pro', 'Language Expert'],
+      badges: ['Photo Pro', 'Portfolio Coach'],
       availability: 'Available in 2 hours',
-      languages: ['English', 'Spanish', 'Portuguese']
+      languages: ['English', 'Telugu', 'Hindi']
     },
     {
       id: 4,
-      name: 'David Kim',
+      name: 'Arjun Singh',
       title: 'Software Engineer & Fitness Coach',
-      bio: 'Clean code and clean living! I help people write better code and live healthier lives through fitness and nutrition.',
-      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=david',
+      bio: 'Pune-based engineer who mentors on backend systems and also runs fitness workshops on weekends.',
+      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=arjun_singh',
       rating: 4.6,
       sessions: 31,
-      location: 'Seattle, WA',
+      location: 'Pune, MH',
       skills: {
-        teaching: ['Python', 'Django', 'Fitness Training', 'Nutrition'],
-        learning: ['React Native', 'AI/ML', 'Meditation']
+        teaching: ['Python', 'Django', 'Fitness Training', 'APIs'],
+        learning: ['React Native', 'Machine Learning', 'Meditation']
       },
-      badges: ['Code Master', 'Fitness Pro'],
+      badges: ['Code Mentor', 'Fitness Pro'],
       availability: 'Available this evening',
-      languages: ['English', 'Korean']
+      languages: ['English', 'Hindi', 'Marathi']
     },
     {
       id: 5,
-      name: 'Anna Williams',
-      title: 'Business Consultant & Artist',
-      bio: 'Helping businesses grow while pursuing my passion for art. Love the intersection of creativity and strategy.',
-      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=anna',
+      name: 'Neha Gupta',
+      title: 'Business Consultant & Illustrator',
+      bio: 'Delhi-based consultant who helps startups with business strategy and also teaches digital illustration.',
+      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=neha_gupta',
       rating: 4.9,
       sessions: 19,
-      location: 'Chicago, IL',
+      location: 'New Delhi, DL',
       skills: {
-        teaching: ['Business Strategy', 'Watercolor Painting', 'Public Speaking'],
-        learning: ['Digital Art', 'Animation', 'French']
+        teaching: ['Business Strategy', 'Illustration', 'Public Speaking'],
+        learning: ['Animation', 'French', 'UI/UX']
       },
-      badges: ['Business Expert', 'Creative Soul'],
+      badges: ['Startup Mentor', 'Creative Lead'],
       availability: 'Available now',
-      languages: ['English']
+      languages: ['English', 'Hindi']
     },
     {
       id: 6,
-      name: 'Carlos Martinez',
+      name: 'Vikram Singh',
       title: 'Chef & Culinary Instructor',
-      bio: 'Bringing flavors to life! Professional chef who loves teaching cooking techniques and exploring world cuisines.',
-      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=carlos',
+      bio: 'Kolkata-based chef skilled in regional Indian cuisines, loves teaching home-cooking techniques and fusion recipes.',
+      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=vikram_singh',
       rating: 4.8,
       sessions: 26,
-      location: 'Miami, FL',
+      location: 'Kolkata, WB',
       skills: {
-        teaching: ['Cooking', 'Baking', 'Food Photography', 'Restaurant Management'],
-        learning: ['Wine Pairing', 'Food Blogging', 'Italian']
+        teaching: ['Indian Cooking', 'Baking', 'Food Styling'],
+        learning: ['Food Photography', 'Nutrition']
       },
       badges: ['Master Chef', 'Food Educator'],
       availability: 'Available weekends',
-      languages: ['English', 'Spanish']
+      languages: ['English', 'Bengali', 'Hindi']
     }
   ];
 
