@@ -241,7 +241,7 @@ const SwapRequestManager = () => {
         loadAdditionalDetails(data);
       }
     } catch (error) {
-      console.error('Error fetching requests:', error);
+      console.error('Error fetching requests:', error?.message || (typeof error === 'object' ? JSON.stringify(error) : String(error)));
     } finally {
       setLoading(false);
     }
@@ -273,7 +273,7 @@ const SwapRequestManager = () => {
         setRequests(updatedRequests);
       }
     } catch (error) {
-      console.error('Error loading additional details:', error);
+      console.error('Error loading additional details:', error?.message || (typeof error === 'object' ? JSON.stringify(error) : String(error)));
     }
   };
 
@@ -292,12 +292,12 @@ const SwapRequestManager = () => {
       toast.success(`Request ${action}ed successfully`);
       fetchRequests();
     } catch (error) {
-      console.error('Error updating request:', error);
+      console.error('Error updating request:', error?.message || (typeof error === 'object' ? JSON.stringify(error) : String(error)));
       toast.success(`Request ${action}ed successfully (Demo mode)`);
-      
+
       // Update dummy data for demo
-      setRequests(prev => prev.map(req => 
-        req.id === requestId 
+      setRequests(prev => prev.map(req =>
+        req.id === requestId
           ? { ...req, status: action === 'accept' ? 'accepted' : action === 'reject' ? 'rejected' : 'cancelled' }
           : req
       ));

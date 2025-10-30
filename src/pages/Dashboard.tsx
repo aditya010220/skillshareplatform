@@ -168,16 +168,17 @@ const Dashboard = () => {
       };
       
       if (error && error.code !== 'PGRST116') {
-        console.error('Error fetching profile:', error);
+        console.error('Error fetching profile:', error?.message || (typeof error === 'object' ? JSON.stringify(error) : String(error)));
         setProfile(dummyProfile);
       } else {
         console.log('Profile loaded successfully');
         const finalProfile = profileData || dummyProfile;
         setProfile(finalProfile);
-        try { sessionStorage.setItem('ss_profile', JSON.stringify(finalProfile)); } catch (e) { console.error('Could not cache profile', e); }
+        try { sessionStorage.setItem('ss_profile', JSON.stringify(finalProfile)); } catch (e) { console.error('Could not cache profile', e?.message || (typeof e === 'object' ? JSON.stringify(e) : String(e))); }
       }
     } catch (error) {
-      console.error('Error fetching profile:', error);
+      console.error('Error fetching profile:', error?.message || (typeof error === 'object' ? JSON.stringify(error) : String(error)));
+      setProfile(dummyProfile);
     }
   };
 

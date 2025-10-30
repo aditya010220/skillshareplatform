@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Bell, X, Check, Clock, Star, MessageSquare } from 'lucide-react';
@@ -29,7 +28,7 @@ const NotificationCenter = () => {
       setNotifications(data || []);
       setUnreadCount(data?.filter(n => !n.read).length || 0);
     } catch (error) {
-      console.error('Error fetching notifications:', error);
+      console.error('Error fetching notifications:', error?.message || (typeof error === 'object' ? JSON.stringify(error) : String(error)));
     }
   };
 
