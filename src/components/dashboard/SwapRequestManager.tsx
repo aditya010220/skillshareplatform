@@ -13,6 +13,7 @@ const SwapRequestManager = () => {
   const [filter, setFilter] = useState('all');
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [selectedRequest, setSelectedRequest] = useState<any>(null);
+  const navigate = useNavigate();
 
   // Enhanced dummy data with more entries for demonstration
   const dummyRequests = [
