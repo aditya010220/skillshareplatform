@@ -398,9 +398,9 @@ const Dashboard = () => {
 
                 <SidebarMenuItem>
                   <SidebarMenuButton
-                    onClick={() => setActiveTab('mentorship')}
+                    onClick={() => setActiveTab('mentorship-requests')}
                     tooltip={state === 'collapsed' ? 'Mentorship Requests' : undefined}
-                    className={`w-full ${activeTab === 'mentorship' ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white' : 'hover:bg-gray-100'}`}>
+                    className={`w-full ${activeTab === 'mentorship-requests' ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white' : 'hover:bg-gray-100'}`}>
                     <MessageCircle className="w-4 h-4" />
                     {state === 'expanded' && <span>Mentorship Requests</span>}
                   </SidebarMenuButton>
