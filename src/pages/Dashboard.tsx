@@ -266,35 +266,166 @@ const Dashboard = () => {
         </SidebarHeader>
 
         <SidebarContent>
+          {/* Main Section */}
           <SidebarGroup>
             <SidebarGroupLabel>Main</SidebarGroupLabel>
             <SidebarGroupContent>
               <SidebarMenu>
-                {tabs.map((tab) => (
-                  <SidebarMenuItem key={tab.id}>
-                    <SidebarMenuButton
-                      onClick={() => {
-                        if (tab.id === 'chat') {
-                          navigate('/chat');
-                        } else {
-                          setActiveTab(tab.id);
-                        }
-                      }}
-                      tooltip={state === 'collapsed' ? tab.label : undefined}
-                      className={`w-full ${
-                        activeTab === tab.id
-                          ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white'
-                          : 'hover:bg-gray-100'
-                      }`}
-                    >
-                      <tab.icon className="w-4 h-4" />
-                      {state === 'expanded' && <span>{tab.label}</span>}
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                ))}
+                <SidebarMenuItem>
+                  <SidebarMenuButton
+                    onClick={() => setActiveTab('overview')}
+                    tooltip={state === 'collapsed' ? 'Overview' : undefined}
+                    className={`w-full ${activeTab === 'overview' ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white' : 'hover:bg-gray-100'}`}>
+                    <Home className="w-4 h-4" />
+                    {state === 'expanded' && <span>Overview</span>}
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+
+                <SidebarMenuItem>
+                  <SidebarMenuButton
+                    onClick={() => setActiveTab('recommendations')}
+                    tooltip={state === 'collapsed' ? 'Recommendations' : undefined}
+                    className={`w-full ${activeTab === 'recommendations' ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white' : 'hover:bg-gray-100'}`}>
+                    <Bell className="w-4 h-4" />
+                    {state === 'expanded' && <span>Recommendations</span>}
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+
+                <SidebarMenuItem>
+                  <SidebarMenuButton
+                    onClick={() => setActiveTab('analytics')}
+                    tooltip={state === 'collapsed' ? 'Analytics' : undefined}
+                    className={`w-full ${activeTab === 'analytics' ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white' : 'hover:bg-gray-100'}`}>
+                    <BarChart3 className="w-4 h-4" />
+                    {state === 'expanded' && <span>Analytics</span>}
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+
+                <SidebarMenuItem>
+                  <SidebarMenuButton
+                    onClick={() => setActiveTab('goals')}
+                    tooltip={state === 'collapsed' ? 'Goals' : undefined}
+                    className={`w-full ${activeTab === 'goals' ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white' : 'hover:bg-gray-100'}`}>
+                    <Target className="w-4 h-4" />
+                    {state === 'expanded' && <span>Goals</span>}
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
               </SidebarMenu>
             </SidebarGroupContent>
           </SidebarGroup>
+
+          {/* Learning Section */}
+          <SidebarGroup>
+            <SidebarGroupLabel>Learning</SidebarGroupLabel>
+            <SidebarGroupContent>
+              <SidebarMenu>
+                <SidebarMenuItem>
+                  <SidebarMenuButton
+                    onClick={() => setActiveTab('ai-assistant')}
+                    tooltip={state === 'collapsed' ? 'AI Assistant' : undefined}
+                    className={`w-full ${activeTab === 'ai-assistant' ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white' : 'hover:bg-gray-100'}`}>
+                    <Brain className="w-4 h-4" />
+                    {state === 'expanded' && <span>AI Assistant</span>}
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+
+                <SidebarMenuItem>
+                  <SidebarMenuButton
+                    onClick={() => setActiveTab('quizzes')}
+                    tooltip={state === 'collapsed' ? 'Quizzes' : undefined}
+                    className={`w-full ${activeTab === 'quizzes' ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white' : 'hover:bg-gray-100'}`}>
+                    <HelpCircle className="w-4 h-4" />
+                    {state === 'expanded' && <span>Quizzes</span>}
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+
+                <SidebarMenuItem>
+                  <SidebarMenuButton
+                    onClick={() => setActiveTab('certificates')}
+                    tooltip={state === 'collapsed' ? 'Certificates' : undefined}
+                    className={`w-full ${activeTab === 'certificates' ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white' : 'hover:bg-gray-100'}`}>
+                    <Award className="w-4 h-4" />
+                    {state === 'expanded' && <span>Certificates</span>}
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+
+                <SidebarMenuItem>
+                  <SidebarMenuButton
+                    onClick={() => setActiveTab('progress')}
+                    tooltip={state === 'collapsed' ? 'Progress' : undefined}
+                    className={`w-full ${activeTab === 'progress' ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white' : 'hover:bg-gray-100'}`}>
+                    <BarChart3 className="w-4 h-4" />
+                    {state === 'expanded' && <span>Progress</span>}
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+
+          {/* Mentorship Section */}
+          <SidebarGroup>
+            <SidebarGroupLabel>Mentorship</SidebarGroupLabel>
+            <SidebarGroupContent>
+              <SidebarMenu>
+                <SidebarMenuItem>
+                  <SidebarMenuButton
+                    onClick={() => navigate('/connect')}
+                    tooltip={state === 'collapsed' ? 'Find Matches' : undefined}
+                    className={`w-full ${activeTab === 'matchmaking' ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white' : 'hover:bg-gray-100'}`}>
+                    <Users className="w-4 h-4" />
+                    {state === 'expanded' && <span>Find Matches</span>}
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+
+                <SidebarMenuItem>
+                  <SidebarMenuButton
+                    onClick={() => setActiveTab('mentorship')}
+                    tooltip={state === 'collapsed' ? 'Mentorship Requests' : undefined}
+                    className={`w-full ${activeTab === 'mentorship' ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white' : 'hover:bg-gray-100'}`}>
+                    <MessageCircle className="w-4 h-4" />
+                    {state === 'expanded' && <span>Mentorship Requests</span>}
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+
+          {/* Achievements Section */}
+          <SidebarGroup>
+            <SidebarGroupLabel>Achievements</SidebarGroupLabel>
+            <SidebarGroupContent>
+              <SidebarMenu>
+                <SidebarMenuItem>
+                  <SidebarMenuButton
+                    onClick={() => setActiveTab('achievements')}
+                    tooltip={state === 'collapsed' ? 'Achievements' : undefined}
+                    className={`w-full ${activeTab === 'achievements' ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white' : 'hover:bg-gray-100'}`}>
+                    <Award className="w-4 h-4" />
+                    {state === 'expanded' && <span>Achievements</span>}
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+
+          {/* Search */}
+          <SidebarGroup>
+            <SidebarGroupLabel>Search</SidebarGroupLabel>
+            <SidebarGroupContent>
+              <SidebarMenu>
+                <SidebarMenuItem>
+                  <SidebarMenuButton
+                    onClick={() => setActiveTab('search')}
+                    tooltip={state === 'collapsed' ? 'Search' : undefined}
+                    className={`w-full ${activeTab === 'search' ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white' : 'hover:bg-gray-100'}`}>
+                    <Search className="w-4 h-4" />
+                    {state === 'expanded' && <span>Search</span>}
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+
         </SidebarContent>
 
         <SidebarFooter className="p-4 space-y-3">
