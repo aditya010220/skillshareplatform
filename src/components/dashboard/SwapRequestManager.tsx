@@ -494,7 +494,7 @@ const SwapRequestManager = () => {
                       <div className="flex flex-wrap items-center gap-4 text-xs text-gray-500">
                         <div className="flex items-center space-x-1">
                           <Clock className="w-3 h-3" />
-                          <span>{new Date(request.created_at).toLocaleDateString()}</span>
+                          <span>{new Date(request.created_at).toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short', timeZone: 'Asia/Kolkata' })}</span>
                         </div>
                         {request.proposed_duration && (
                           <div className="flex items-center space-x-1">
