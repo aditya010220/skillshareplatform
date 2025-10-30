@@ -119,24 +119,29 @@ const Connect = () => {
   const categories = ['Programming', 'Design', 'Marketing', 'Languages', 'Creative', 'Business', 'Health'];
   const locations = ['Mumbai, MH', 'Bengaluru, KA', 'New Delhi, DL', 'Pune, MH', 'Hyderabad, TG', 'Kolkata, WB'];
 
+  const { toast } = useToast();
+  const [requestsSent, setRequestsSent] = useState<number[]>([]);
+
   const handleConnect = (person: any) => {
-    console.log('Connecting with:', person.name);
-    // Here you would implement the connection logic
+    if (requestsSent.includes(person.id)) return;
+    setRequestsSent(prev => [...prev, person.id]);
+    toast({ title: 'Request was sent', description: `Your mentorship request was sent to ${person.name}.` });
   };
 
   const handleMessage = (person: any) => {
-    console.log('Messaging:', person.name);
-    // Here you would implement the messaging logic
+    // navigate to chat with selected member
+    navigate('/chat', { state: { selectedMember: { full_name: person.name, id: person.id } } });
   };
 
   const handleVideoCall = (person: any) => {
-    console.log('Video calling:', person.name);
-    // Here you would implement the video call logic
+    // Open Google Meet new meeting in a new tab (fallback to Zoom if preferred)
+    toast({ title: 'Starting meeting', description: `Opening a Google Meet for you and ${person.name}...` });
+    window.open('https://meet.google.com/new', '_blank', 'noopener');
   };
 
   const handleSchedule = (person: any) => {
-    console.log('Scheduling with:', person.name);
-    // Here you would implement the scheduling logic
+    // Redirect to dashboard and open calendar with the selected member
+    navigate('/dashboard', { state: { openCalendar: true, selectedMember: person } });
   };
 
   return (
