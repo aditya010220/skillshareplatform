@@ -20,7 +20,7 @@ const Chat = () => {
       name: 'Priya Sharma',
       avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=priya-sharma',
       lastMessage: 'Loved our React session — thanks!',
-      timestamp: '2 min ago',
+      timestamp: '2 min ago - Mumbai',
       isOnline: true,
       unreadCount: 2,
       city: 'Mumbai'
