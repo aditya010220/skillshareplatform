@@ -40,7 +40,7 @@ const Chat = () => {
       name: 'Anjali Reddy',
       avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=anjali-reddy',
       lastMessage: 'Sure — happy to take the Spanish session tomorrow',
-      timestamp: '3 hours ago',
+      timestamp: '3 hours ago - Hyderabad',
       isOnline: true,
       unreadCount: 1,
       city: 'Hyderabad'
