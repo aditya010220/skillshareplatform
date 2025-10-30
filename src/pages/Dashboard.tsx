@@ -34,6 +34,7 @@ import PersonalizedRecommendations from '@/components/dashboard/PersonalizedReco
 import SkillAnalytics from '@/components/dashboard/SkillAnalytics';
 import GoalTracker from '@/components/dashboard/GoalTracker';
 import MentorshipProgram from '@/components/dashboard/MentorshipProgram';
+import MentorshipRequests from '@/components/dashboard/MentorshipRequests';
 import CertificationSystem from '@/components/dashboard/CertificationSystem';
 import AILearningAssistant from '@/components/dashboard/AILearningAssistant';
 import QuizSystem from '@/components/dashboard/QuizSystem';
