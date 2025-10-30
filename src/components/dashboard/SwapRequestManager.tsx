@@ -477,9 +477,12 @@ const SwapRequestManager = () => {
                     <div className="flex-1 min-w-0">
                       {/* Header */}
                       <div className="flex items-center space-x-3 mb-3">
-                        <h3 className="font-bold text-gray-900 text-lg">
-                          {request.requester.full_name}
-                        </h3>
+                        <div>
+                          <h3 className="font-bold text-gray-900 text-lg">
+                            {request.requester.full_name}
+                          </h3>
+                          <div className="text-sm text-gray-500">{request.requester?.city || request.city || ''}</div>
+                        </div>
                         <Badge 
                           className={`${statusConfig.color} border flex items-center space-x-1`}
                         >
