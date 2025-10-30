@@ -538,6 +538,7 @@ const SwapRequestManager = () => {
                     {request.status === 'accepted' && (
                       <div className="flex flex-col space-y-2">
                         <motion.button
+                          onClick={() => navigate('/chat', { state: { selectedMember: request.requester || request.recipient } })}
                           className="px-4 py-2 bg-blue-500 text-white rounded-xl hover:bg-blue-600 transition-colors flex items-center space-x-2 text-sm font-medium shadow-md"
                           whileHover={{ scale: 1.05 }}
                           whileTap={{ scale: 0.95 }}
