@@ -300,7 +300,7 @@ const Chat = () => {
                         <p className={`text-xs mt-1 ${
                           message.isOwn ? 'text-blue-200' : 'text-gray-500'
                         }`}>
-                          {message.timestamp.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
+                          {new Date(message.timestamp).toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' })}
                         </p>
                       </div>
                     </motion.div>
