@@ -311,13 +311,14 @@ const Connect = () => {
               <div className="grid grid-cols-2 gap-3">
                 <motion.button
                   onClick={() => handleConnect(person)}
-                  className="bg-gradient-to-r from-blue-500 to-purple-600 text-white py-2 px-4 rounded-lg font-medium hover:from-blue-600 hover:to-purple-700 transition-all"
+                  disabled={requestsSent.includes(person.id)}
+                  className={`py-2 px-4 rounded-lg font-medium transition-all ${requestsSent.includes(person.id) ? 'bg-gray-200 text-gray-600 cursor-default' : 'bg-gradient-to-r from-blue-500 to-purple-600 text-white hover:from-blue-600 hover:to-purple-700'}`}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                 >
-                  Connect
+                  {requestsSent.includes(person.id) ? 'Request Sent' : 'Connect'}
                 </motion.button>
-                
+
                 <motion.button
                   onClick={() => handleMessage(person)}
                   className="border border-gray-300 text-gray-700 py-2 px-4 rounded-lg font-medium hover:bg-gray-50 transition-all flex items-center justify-center space-x-1"
@@ -327,7 +328,7 @@ const Connect = () => {
                   <MessageCircle className="w-4 h-4" />
                   <span>Message</span>
                 </motion.button>
-                
+
                 <motion.button
                   onClick={() => handleVideoCall(person)}
                   className="border border-gray-300 text-gray-700 py-2 px-4 rounded-lg font-medium hover:bg-gray-50 transition-all flex items-center justify-center space-x-1"
@@ -337,7 +338,7 @@ const Connect = () => {
                   <Video className="w-4 h-4" />
                   <span>Video Call</span>
                 </motion.button>
-                
+
                 <motion.button
                   onClick={() => handleSchedule(person)}
                   className="border border-gray-300 text-gray-700 py-2 px-4 rounded-lg font-medium hover:bg-gray-50 transition-all flex items-center justify-center space-x-1"
