@@ -314,6 +314,24 @@ const Dashboard = () => {
             </SidebarGroupContent>
           </SidebarGroup>
 
+          {/* Search */}
+          <SidebarGroup>
+            <SidebarGroupLabel>Search</SidebarGroupLabel>
+            <SidebarGroupContent>
+              <SidebarMenu>
+                <SidebarMenuItem>
+                  <SidebarMenuButton
+                    onClick={() => setActiveTab('search')}
+                    tooltip={state === 'collapsed' ? 'Search' : undefined}
+                    className={`w-full ${activeTab === 'search' ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white' : 'hover:bg-gray-100'}`}>
+                    <Search className="w-4 h-4" />
+                    {state === 'expanded' && <span>Search</span>}
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+
           {/* Learning Section */}
           <SidebarGroup>
             <SidebarGroupLabel>Learning</SidebarGroupLabel>
