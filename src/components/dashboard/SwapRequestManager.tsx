@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Clock, Check, X, Calendar, MessageSquare, User, Filter, Plus, Star, ChevronDown, Send, ArrowRight } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -12,6 +13,7 @@ const SwapRequestManager = () => {
   const [filter, setFilter] = useState('all');
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [selectedRequest, setSelectedRequest] = useState<any>(null);
+  const navigate = useNavigate();
 
   // Enhanced dummy data with more entries for demonstration
   const dummyRequests = [
@@ -23,13 +25,16 @@ const SwapRequestManager = () => {
       message: 'Hi! I would love to learn React from you and I can teach you Python in return. I have 3 years of Python experience.',
       created_at: '2024-01-15T10:30:00Z',
       proposed_duration: 60,
+      city: 'Mumbai',
       requester: {
         full_name: 'Priya Sharma',
-        avatar_url: null
+        avatar_url: null,
+        city: 'Mumbai'
       },
       recipient: {
         full_name: 'Arjun Singh',
-        avatar_url: null
+        avatar_url: null,
+        city: 'Pune'
       },
       offered_skill: {
         name: 'Python Programming'
@@ -46,13 +51,16 @@ const SwapRequestManager = () => {
       message: 'I am excited to learn graphic design from you! I can help you with JavaScript and Node.js.',
       created_at: '2024-01-14T14:20:00Z',
       proposed_duration: 90,
+      city: 'Bengaluru',
       requester: {
         full_name: 'Rohan Patel',
-        avatar_url: null
+        avatar_url: null,
+        city: 'Bengaluru'
       },
       recipient: {
         full_name: 'Priya Sharma',
-        avatar_url: null
+        avatar_url: null,
+        city: 'Mumbai'
       },
       offered_skill: {
         name: 'JavaScript & Node.js'
@@ -69,13 +77,16 @@ const SwapRequestManager = () => {
       message: 'Thank you for the amazing photography session! I really enjoyed teaching you about digital marketing.',
       created_at: '2024-01-12T09:15:00Z',
       proposed_duration: 120,
+      city: 'Hyderabad',
       requester: {
         full_name: 'Nisha Iyer',
-        avatar_url: null
+        avatar_url: null,
+        city: 'Hyderabad'
       },
       recipient: {
         full_name: 'Priya Sharma',
-        avatar_url: null
+        avatar_url: null,
+        city: 'Mumbai'
       },
       offered_skill: {
         name: 'Digital Marketing'
@@ -92,13 +103,16 @@ const SwapRequestManager = () => {
       message: 'I would like to exchange my cooking skills for your web development knowledge.',
       created_at: '2024-01-10T16:45:00Z',
       proposed_duration: 75,
+      city: 'Chennai',
       requester: {
         full_name: 'Anjali Reddy',
-        avatar_url: null
+        avatar_url: null,
+        city: 'Chennai'
       },
       recipient: {
         full_name: 'Priya Sharma',
-        avatar_url: null
+        avatar_url: null,
+        city: 'Mumbai'
       },
       offered_skill: {
         name: 'Cooking & Baking'
@@ -115,13 +129,16 @@ const SwapRequestManager = () => {
       message: 'Hi! I saw your profile and would love to learn guitar from you. I can teach you data analysis in return.',
       created_at: '2024-01-16T11:30:00Z',
       proposed_duration: 45,
+      city: 'Kolkata',
       requester: {
         full_name: 'Priya Sharma',
-        avatar_url: null
+        avatar_url: null,
+        city: 'Mumbai'
       },
       recipient: {
         full_name: 'Vikram Singh',
-        avatar_url: null
+        avatar_url: null,
+        city: 'Kolkata'
       },
       offered_skill: {
         name: 'Data Analysis'
@@ -138,13 +155,16 @@ const SwapRequestManager = () => {
       message: 'I am interested in learning advanced Excel skills from you. I can teach you video editing using Premiere Pro.',
       created_at: '2024-01-17T08:45:00Z',
       proposed_duration: 90,
+      city: 'Delhi',
       requester: {
         full_name: 'Rohit Kumar',
-        avatar_url: null
+        avatar_url: null,
+        city: 'Delhi'
       },
       recipient: {
         full_name: 'Priya Sharma',
-        avatar_url: null
+        avatar_url: null,
+        city: 'Mumbai'
       },
       offered_skill: {
         name: 'Video Editing'
@@ -161,13 +181,16 @@ const SwapRequestManager = () => {
       message: 'Your French tutoring sessions are highly recommended! I can help you with mobile app development using Flutter.',
       created_at: '2024-01-13T15:20:00Z',
       proposed_duration: 60,
+      city: 'Ahmedabad',
       requester: {
         full_name: 'Deepika Sharma',
-        avatar_url: null
+        avatar_url: null,
+        city: 'Ahmedabad'
       },
       recipient: {
         full_name: 'Priya Sharma',
-        avatar_url: null
+        avatar_url: null,
+        city: 'Mumbai'
       },
       offered_skill: {
         name: 'Flutter Development'
@@ -184,13 +207,16 @@ const SwapRequestManager = () => {
       message: 'Great session on UI/UX design principles! I enjoyed sharing my knowledge about blockchain technology.',
       created_at: '2024-01-08T12:30:00Z',
       proposed_duration: 105,
+      city: 'Pune',
       requester: {
         full_name: 'Arjun Kumar',
-        avatar_url: null
+        avatar_url: null,
+        city: 'Pune'
       },
       recipient: {
         full_name: 'Priya Sharma',
-        avatar_url: null
+        avatar_url: null,
+        city: 'Mumbai'
       },
       offered_skill: {
         name: 'Blockchain Technology'
@@ -241,7 +267,7 @@ const SwapRequestManager = () => {
         loadAdditionalDetails(data);
       }
     } catch (error) {
-      console.error('Error fetching requests:', error);
+      console.error('Error fetching requests:', error?.message || (typeof error === 'object' ? JSON.stringify(error) : String(error)));
     } finally {
       setLoading(false);
     }
@@ -273,7 +299,7 @@ const SwapRequestManager = () => {
         setRequests(updatedRequests);
       }
     } catch (error) {
-      console.error('Error loading additional details:', error);
+      console.error('Error loading additional details:', error?.message || (typeof error === 'object' ? JSON.stringify(error) : String(error)));
     }
   };
 
@@ -292,12 +318,12 @@ const SwapRequestManager = () => {
       toast.success(`Request ${action}ed successfully`);
       fetchRequests();
     } catch (error) {
-      console.error('Error updating request:', error);
+      console.error('Error updating request:', error?.message || (typeof error === 'object' ? JSON.stringify(error) : String(error)));
       toast.success(`Request ${action}ed successfully (Demo mode)`);
-      
+
       // Update dummy data for demo
-      setRequests(prev => prev.map(req => 
-        req.id === requestId 
+      setRequests(prev => prev.map(req =>
+        req.id === requestId
           ? { ...req, status: action === 'accept' ? 'accepted' : action === 'reject' ? 'rejected' : 'cancelled' }
           : req
       ));
@@ -451,9 +477,12 @@ const SwapRequestManager = () => {
                     <div className="flex-1 min-w-0">
                       {/* Header */}
                       <div className="flex items-center space-x-3 mb-3">
-                        <h3 className="font-bold text-gray-900 text-lg">
-                          {request.requester.full_name}
-                        </h3>
+                        <div>
+                          <h3 className="font-bold text-gray-900 text-lg">
+                            {request.requester.full_name}
+                          </h3>
+                          <div className="text-sm text-gray-500">{request.requester?.city || request.city || ''}</div>
+                        </div>
                         <Badge 
                           className={`${statusConfig.color} border flex items-center space-x-1`}
                         >
@@ -492,7 +521,7 @@ const SwapRequestManager = () => {
                       <div className="flex flex-wrap items-center gap-4 text-xs text-gray-500">
                         <div className="flex items-center space-x-1">
                           <Clock className="w-3 h-3" />
-                          <span>{new Date(request.created_at).toLocaleDateString()}</span>
+                          <span>{new Date(request.created_at).toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short', timeZone: 'Asia/Kolkata' })}</span>
                         </div>
                         {request.proposed_duration && (
                           <div className="flex items-center space-x-1">
@@ -530,12 +559,23 @@ const SwapRequestManager = () => {
                           <X className="w-4 h-4" />
                           <span>Reject</span>
                         </motion.button>
+
+                        <motion.button
+                          onClick={() => navigate('/chat', { state: { selectedMember: request.requester || request.recipient } })}
+                          className="px-4 py-2 bg-blue-500 text-white rounded-xl hover:bg-blue-600 transition-colors shadow-md flex items-center space-x-2 text-sm font-medium"
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                        >
+                          <MessageSquare className="w-4 h-4" />
+                          <span>Message</span>
+                        </motion.button>
                       </>
                     )}
 
                     {request.status === 'accepted' && (
                       <div className="flex flex-col space-y-2">
                         <motion.button
+                          onClick={() => navigate('/chat', { state: { selectedMember: request.requester || request.recipient } })}
                           className="px-4 py-2 bg-blue-500 text-white rounded-xl hover:bg-blue-600 transition-colors flex items-center space-x-2 text-sm font-medium shadow-md"
                           whileHover={{ scale: 1.05 }}
                           whileTap={{ scale: 0.95 }}

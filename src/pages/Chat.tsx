@@ -20,7 +20,7 @@ const Chat = () => {
       name: 'Priya Sharma',
       avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=priya-sharma',
       lastMessage: 'Loved our React session — thanks!',
-      timestamp: '2 min ago',
+      timestamp: '2 min ago - Mumbai',
       isOnline: true,
       unreadCount: 2,
       city: 'Mumbai'
@@ -30,7 +30,7 @@ const Chat = () => {
       name: 'Rohan Patel',
       avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=rohan-patel',
       lastMessage: 'Shared some SEO tips in the doc',
-      timestamp: '1 hour ago',
+      timestamp: '1 hour ago - Bengaluru',
       isOnline: false,
       unreadCount: 0,
       city: 'Bengaluru'
@@ -40,7 +40,7 @@ const Chat = () => {
       name: 'Anjali Reddy',
       avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=anjali-reddy',
       lastMessage: 'Sure — happy to take the Spanish session tomorrow',
-      timestamp: '3 hours ago',
+      timestamp: '3 hours ago - Hyderabad',
       isOnline: true,
       unreadCount: 1,
       city: 'Hyderabad'
@@ -150,9 +150,9 @@ const Chat = () => {
           <div className="flex items-center justify-between py-6">
             <div className="flex items-center space-x-4">
               <button
-                onClick={() => navigate(-1)}
+                onClick={() => navigate('/dashboard')}
                 className="p-2 text-gray-500 hover:text-blue-500 transition-colors"
-                title="Back"
+                title="Back to Dashboard"
               >
                 <ArrowLeft className="w-6 h-6" />
               </button>
@@ -300,7 +300,7 @@ const Chat = () => {
                         <p className={`text-xs mt-1 ${
                           message.isOwn ? 'text-blue-200' : 'text-gray-500'
                         }`}>
-                          {message.timestamp.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
+                          {new Date(message.timestamp).toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' })}
                         </p>
                       </div>
                     </motion.div>

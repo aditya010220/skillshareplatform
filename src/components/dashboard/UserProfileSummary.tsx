@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Star, Award, Calendar, TrendingUp, Edit } from 'lucide-react';
@@ -31,7 +30,7 @@ const UserProfileSummary: React.FC<UserProfileSummaryProps> = ({ profile }) => {
       if (error) throw error;
       setUserSkills(data || []);
     } catch (error) {
-      console.error('Error fetching user skills:', error);
+      console.error('Error fetching user skills:', error?.message || (typeof error === 'object' ? JSON.stringify(error) : String(error)));
     } finally {
       setLoading(false);
     }
