@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowLeft, MessageCircle, Video, Calendar, Star, MapPin, Filter, Search } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { useToast } from '@/hooks/use-toast';
 
 const Connect = () => {
   const navigate = useNavigate();
